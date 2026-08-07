@@ -348,7 +348,7 @@ function render() {
 /* ─── RENDER CARD v3 ──────────────────────────────────────── */
 function renderCard(bike) {
   const icon = CATEGORY_ICONS[bike.Categoria] || DEFAULT_ICON;
-  const imgs = parseImages(bike.Immagine, 'w600');
+  const imgs = parseImages(bike.Immagine, 'w400');
   const firstImg = imgs[0] || '';
   const hasImg = !!firstImg;
   const isFeatured = isTrue(bike.In_Evidenza);
@@ -358,7 +358,7 @@ function renderCard(bike) {
     <article class="product-card" tabindex="0" role="listitem" aria-label="${escapeHtml(bike.Nome)}">
       <div class="product-card__visual">
         ${hasImg
-          ? `<img class="product-card__img" src="${firstImg}" alt="${escapeHtml(bike.Nome)}" loading="lazy"
+          ? `<img class="product-card__img" src="${firstImg}" alt="${escapeHtml(bike.Nome)}" loading="lazy" decoding="async"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
              <div class="product-card__icon" style="display:none">${icon}</div>`
           : `<div class="product-card__icon">${icon}</div>`}
@@ -426,7 +426,7 @@ function buildCarousel(images, bikeName, icon) {
   }
   const slides = images.map(url =>
     `<div class="carousel__slide">
-      <img src="${url}" alt="${escapeHtml(bikeName)}" loading="lazy"
+      <img src="${url}" alt="${escapeHtml(bikeName)}" loading="lazy" decoding="async"
         onerror="this.parentElement.style.background='var(--color-surface-raised)';this.style.display='none'">
     </div>`
   ).join('');
@@ -485,7 +485,7 @@ function initCarousel(el) {
 function openModal(bike) {
   if (!modal) return;
   const icon = CATEGORY_ICONS[bike.Categoria] || DEFAULT_ICON;
-  const images = parseImages(bike.Immagine);
+  const images = parseImages(bike.Immagine, 'w800');
   const waText = encodeURIComponent(`${CONFIG.WA_BASE_MSG}${bike.Nome} (${bike.Categoria}). Vorrei sapere disponibilità e prezzo.`);
   const features = bike.Caratteristiche
     ? bike.Caratteristiche.split('|').map(f => f.trim()).filter(Boolean)
