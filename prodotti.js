@@ -88,7 +88,7 @@ const modal = document.getElementById('productModal');
    • https://drive.google.com/uc?id=FILE_ID  (già diretto)
    Tutti diventano: https://drive.google.com/uc?export=view&id=FILE_ID
 */
-function convertDriveUrl(url) {
+function convertDriveUrl(url, size = 'w1200') {
   if (!url || !url.includes('drive.google.com')) return url;
 
   let fileId = null;
@@ -106,17 +106,17 @@ function convertDriveUrl(url) {
 
   if (fileId) {
     // /thumbnail è più affidabile di uc?export=view su browser moderni
-    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
+    return `https://drive.google.com/thumbnail?id=${fileId}&sz=${size}`;
   }
 
   return url; // formato non riconosciuto → restituisce inalterato
 }
 
 /* ─── PARSE IMMAGINI (Drive + diretti, multi) ─────────────── */
-function parseImages(raw) {
+function parseImages(raw, size = 'w1200') {
   if (!raw || !raw.trim()) return [];
   return raw.split(/[|,]/)
-    .map(u => convertDriveUrl(u.trim()))
+    .map(u => convertDriveUrl(u.trim(), size))
     .filter(u => u.startsWith('http'));
 }
 
@@ -348,7 +348,7 @@ function render() {
 /* ─── RENDER CARD v3 ──────────────────────────────────────── */
 function renderCard(bike) {
   const icon = CATEGORY_ICONS[bike.Categoria] || DEFAULT_ICON;
-  const imgs = parseImages(bike.Immagine);
+  const imgs = parseImages(bike.Immagine, 'w600');
   const firstImg = imgs[0] || '';
   const hasImg = !!firstImg;
   const isFeatured = isTrue(bike.In_Evidenza);
@@ -359,6 +359,7 @@ function renderCard(bike) {
       <div class="product-card__visual">
         ${hasImg
           ? `<img class="product-card__img" src="${firstImg}" alt="${escapeHtml(bike.Nome)}" loading="lazy"
+               onload="this.style.opacity=1" style="opacity:0"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
              <div class="product-card__icon" style="display:none">${icon}</div>`
           : `<div class="product-card__icon">${icon}</div>`}
@@ -427,6 +428,7 @@ function buildCarousel(images, bikeName, icon) {
   const slides = images.map(url =>
     `<div class="carousel__slide">
       <img src="${url}" alt="${escapeHtml(bikeName)}" loading="lazy"
+        onload="this.style.opacity=1" style="opacity:0; transition:opacity 0.4s ease"
         onerror="this.parentElement.style.background='var(--color-surface-raised)';this.style.display='none'">
     </div>`
   ).join('');
