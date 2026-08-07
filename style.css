@@ -240,8 +240,8 @@ p{line-height:1.7}
 /* ─── PRODUCT CARD ────────────────────────────────────────────────── */
 .product-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;cursor:pointer;transition:border-color var(--t-mid) ease,transform var(--t-mid) var(--ease-out),box-shadow var(--t-mid) ease;display:flex;flex-direction:column}
 .product-card:hover{border-color:var(--border-hover);transform:translateY(-4px);box-shadow:var(--shadow-float)}
-.product-card__visual{position:relative;aspect-ratio:4/3;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:20px}
-.product-card__img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;transition:transform var(--t-slow) var(--ease-out), opacity 0.4s ease}
+.product-card__visual{position:relative;aspect-ratio:4/3;background:var(--surface-2);overflow:hidden;display:flex;align-items:center;justify-content:center;padding:16px;-webkit-mask-image:linear-gradient(to bottom, black 70%, transparent 100%);mask-image:linear-gradient(to bottom, black 70%, transparent 100%)}
+.product-card__img{width:100%;height:100%;object-fit:contain;transition:transform var(--t-slow) var(--ease-out)}
 .product-card:hover .product-card__img{transform:scale(1.05)}
 .product-card__icon{color:var(--text-subtle);width:72px;height:72px}
 .product-card__icon svg{width:100%;height:100%}
@@ -378,7 +378,7 @@ p{line-height:1.7}
 
 .product-modal__visual {
   flex: 1.2;
-  background: #fff;
+  background: var(--surface-2);
   min-height: 300px;
   position: relative;
   border-bottom: 1px solid var(--border);
@@ -424,7 +424,7 @@ p{line-height:1.7}
 .carousel { width: 100%; height: 100%; position: relative; overflow: hidden; }
 .carousel__track { display: flex; height: 100%; transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1); }
 .carousel__slide { width: 100%; height: 100%; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; }
-.carousel__slide img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; padding: 24px; }
+.carousel__slide img { width: 100%; height: 100%; object-fit: contain; padding: 16px; }
 .carousel__fallback { color: var(--border); }
 .carousel__fallback svg { width: 80px; height: 80px; }
 .carousel__btn { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.5); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(4px); transition: background 0.2s, transform 0.2s; z-index: 2; }

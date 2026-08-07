@@ -359,7 +359,6 @@ function renderCard(bike) {
       <div class="product-card__visual">
         ${hasImg
           ? `<img class="product-card__img" src="${firstImg}" alt="${escapeHtml(bike.Nome)}" loading="lazy"
-               onload="this.style.opacity=1" style="opacity:0"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
              <div class="product-card__icon" style="display:none">${icon}</div>`
           : `<div class="product-card__icon">${icon}</div>`}
@@ -428,7 +427,6 @@ function buildCarousel(images, bikeName, icon) {
   const slides = images.map(url =>
     `<div class="carousel__slide">
       <img src="${url}" alt="${escapeHtml(bikeName)}" loading="lazy"
-        onload="this.style.opacity=1" style="opacity:0; transition:opacity 0.4s ease"
         onerror="this.parentElement.style.background='var(--color-surface-raised)';this.style.display='none'">
     </div>`
   ).join('');
