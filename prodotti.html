@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le nostre bici | VAI FERRO BIKE – Catalogo a Cavezzo</title>
+  <meta name="description" content="Scopri tutte le bici in negozio da VAI FERRO BIKE a Cavezzo: MTB, e-bike, city bike, gravel, trekking e bici da corsa. Consulenza gratuita, prezzi onesti.">
+  <meta name="theme-color" content="#080808">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#content">Vai al contenuto</a>
+  <header class="header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="VAI FERRO BIKE home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle class="wheel-spin" cx="14" cy="44" r="10"/><circle class="wheel-spin-slow" cx="50" cy="44" r="10"/><path d="M14 44L26 22h12l12 22M26 22l6 22M38 22l-8 22"/><path d="M34 14h10M44 14l-6 8"/></svg></span>
+        <span class="brand-name"><strong>VAI FERRO BIKE</strong><span>Cavezzo · officina · e-bike</span></span>
+      </a>
+      <nav class="nav">
+        <a href="servizi.html">Servizi</a><a href="officina.html">Officina</a><a href="ebike.html">E-bike</a>
+        <a href="prodotti.html">Le nostre bici</a><a href="chi-siamo.html">Chi siamo</a><a href="contatti.html">Contatti</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Attiva tema chiaro"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        <a class="btn btn-primary btn-sm desktop-cta" href="https://wa.me/393000000000?text=Ciao%20VAI%20FERRO%20BIKE%2C%20vorrei%20informazioni%20su%20una%20bici." target="_blank" rel="noopener noreferrer">Chiedi info</a>
+        <button class="menu-toggle" type="button" aria-label="Apri menu" aria-expanded="false"><span></span></button>
+      </div>
+    </div>
+  </header>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer__backdrop"></div>
+    <div class="mobile-drawer__panel">
+      <div class="mobile-drawer__header">
+        <a class="brand" href="index.html"><span class="brand-name"><strong>VAI FERRO BIKE</strong></span></a>
+        <button class="mobile-drawer__close" aria-label="Chiudi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+      <nav class="mobile-nav">
+        <a href="servizi.html">Servizi</a><a href="officina.html">Officina</a><a href="ebike.html">E-bike</a>
+        <a href="prodotti.html">Le nostre bici</a><a href="chi-siamo.html">Chi siamo</a><a href="contatti.html">Contatti</a>
+      </nav>
+      <div class="mobile-drawer__footer">
+        <a class="btn btn-primary" href="https://wa.me/393000000000?text=Ciao%20VAI%20FERRO%20BIKE%2C%20vorrei%20informazioni%20su%20una%20bici." target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a class="btn btn-surface" href="tel:+393000000000">Chiama ora</a>
+      </div>
+    </div>
+  </div>
+
+  <main id="content">
+    <section class="page-hero">
+      <div class="container page-hero__inner">
+        <div class="page-hero__kicker reveal">
+          <span class="chip">Cavezzo · Modena</span>
+          <span class="chip">Consulenza inclusa</span>
+          <span class="chip" id="prodottiChip">Catalogo bici</span>
+        </div>
+        <h1 class="page-hero__title reveal reveal-delay-1">Le nostre <span class="accent-text">bici.</span></h1>
+        <p class="page-hero__lead reveal reveal-delay-2">
+          Quello che vedi qui è il catalogo aggiornato del negozio. Nessun acquisto online: se ti interessa una bici, scrivici su WhatsApp o vieni in negozio. Ti aiutiamo a scegliere quella giusta per te.
+        </p>
+      </div>
+    </section>
+
+    <!-- DEMO BANNER -->
+    <div id="demoBanner" hidden>
+      <div class="container" style="padding-block:16px">
+        <div class="demo-banner">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span>Dati di esempio — Collega il tuo Google Sheet per mostrare le bici reali (vedi istruzioni in <code>prodotti.js</code>)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILTRI -->
+    <div class="filter-section">
+      <div class="container">
+        <div class="search-wrap">
+          <span class="search-wrap__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </span>
+          <input type="search" id="searchInput" class="search-input" placeholder="Cerca per nome o marca…" aria-label="Cerca bici">
+          <button class="search-clear" id="searchClear" aria-label="Cancella ricerca" hidden>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="filter-bar">
+          <span class="filter-label">Categoria</span>
+          <div class="filter-pills" id="filterPills" role="group" aria-label="Filtra per categoria"></div>
+          <div class="filter-sort-wrap">
+            <span class="filter-label">Ordina</span>
+            <select class="sort-select" id="sortSelect" aria-label="Ordina prodotti">
+              <option value="evidenza">In evidenza</option>
+              <option value="az">A → Z</option>
+              <option value="za">Z → A</option>
+              <option value="marca">Per marca</option>
+              <option value="anno">Più recenti</option>
+            </select>
+          </div>
+        </div>
+        <p class="product-count" id="prodottiCount" aria-live="polite" aria-atomic="true"></p>
+      </div>
+    </div>
+
+    <!-- GRIGLIA PRODOTTI -->
+    <section aria-label="Catalogo bici">
+      <div class="container" style="padding-bottom:var(--s-16)">
+        <div class="product-grid" id="prodottiGrid" role="list"></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-band">
+      <div class="container cta-band__inner">
+        <span class="eyebrow reveal">Non trovi quello che cerchi?</span>
+        <h2 class="reveal">Forse è in negozio<br>ma non ancora online.</h2>
+        <p class="reveal">Il catalogo si aggiorna frequentemente. Se vuoi una bici specifica, un marchio o un modello che non vedi qui, scrivici: spesso ce l'abbiamo o possiamo ordinarla.</p>
+        <div class="btn-row reveal">
+          <a class="btn btn-primary" href="https://wa.me/393000000000?text=Ciao%20VAI%20FERRO%20BIKE%2C%20cerco%20una%20bici%20specifica%20che%20non%20vedo%20sul%20sito." target="_blank" rel="noopener noreferrer">Scrivici su WhatsApp</a>
+          <a class="btn btn-ghost" href="tel:+393000000000">Chiama ora</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><a class="brand" href="index.html"><span class="brand-name"><strong>VAI FERRO BIKE</strong><span>Negozio bici · Cavezzo</span></span></a><p>Vendita biciclette, e-bike, officina e accessori a Cavezzo, in provincia di Modena.</p></div>
+        <div class="footer-col"><h5>Navigazione</h5><div class="footer-links"><a href="servizi.html">Servizi</a><a href="officina.html">Officina</a><a href="ebike.html">E-bike</a><a href="prodotti.html">Le nostre bici</a><a href="chi-siamo.html">Chi siamo</a><a href="contatti.html">Contatti</a></div></div>
+        <div class="footer-col"><h5>Sede</h5><div class="footer-links"><a href="https://maps.google.com/maps?q=44.8327569,11.0342762&z=15" target="_blank" rel="noopener noreferrer">Via Volturno, 86 — Cavezzo MO</a><a href="https://maps.google.com/maps?q=44.8327569,11.0342762&z=15" target="_blank" rel="noopener noreferrer">Apri su Google Maps →</a></div></div>
+        <div class="footer-col"><h5>Orari</h5><div class="footer-links"><span style="color:var(--text-muted);font-size:14px">Lun – Sab: 08:30–12:30 / 15:30–19:30</span><span style="color:var(--text-subtle);font-size:14px">Domenica chiuso</span></div></div>
+      </div>
+      <div class="footer-bottom"><p>© 2024 VAI FERRO BIKE — Via Volturno 86, 41032 Cavezzo (MO)</p></div>
+    </div>
+  </footer>
+  <div class="sticky-bar"><a class="btn btn-surface" style="flex:1" href="tel:+393000000000">Chiama</a><a class="btn btn-primary" style="flex:1" href="https://wa.me/393000000000?text=Ciao%20VAI%20FERRO%20BIKE%2C%20vorrei%20informazioni%20su%20una%20bici." target="_blank" rel="noopener noreferrer">WhatsApp</a></div>
+
+  <!-- PRODUCT MODAL -->
+  <div class="product-modal" id="productModal" role="dialog" aria-modal="true" aria-label="Dettaglio bici">
+    <div class="product-modal__backdrop"></div>
+    <div class="product-modal__sheet">
+      <div class="product-modal__handle" aria-hidden="true"></div>
+      <button class="product-modal__close" aria-label="Chiudi dettaglio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="product-modal__layout">
+        <div class="product-modal__visual">
+          <!-- Popolato da JS -->
+        </div>
+        <div class="product-modal__content">
+          <div class="product-modal__meta"></div>
+          <h2 class="product-modal__title">Nome bici</h2>
+          <p class="product-modal__price"></p>
+          <p class="product-modal__desc"></p>
+          <div class="product-modal__sizes" hidden>
+            <div class="product-modal__sizes-label">Taglie disponibili</div>
+            <div class="size-pills"></div>
+          </div>
+          <div class="product-modal__info-chips" hidden></div>
+          <div class="product-modal__features"></div>
+          <div class="product-modal__note" hidden></div>
+          <div class="product-modal__actions">
+            <a class="btn btn-primary modal-wa-btn" href="#" target="_blank" rel="noopener noreferrer" style="justify-content:center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.037.507 3.956 1.395 5.64L.057 23.943l6.303-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.893 0-3.662-.524-5.172-1.434l-.37-.22-3.74.982.999-3.648-.241-.374A9.957 9.957 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              Chiedi su WhatsApp
+            </a>
+            <a class="btn btn-surface modal-call-btn" href="#" style="justify-content:center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+              Chiama il negozio
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="impostazioni.js"></script>
+  <script src="main.js"></script>
+  <script src="prodotti.js"></script>
+</body>
+</html>
