@@ -99,14 +99,17 @@ function convertDriveUrl(url, size = 'w1200') {
 
   // https://drive.google.com/open?id=FILE_ID
   // https://drive.google.com/uc?id=FILE_ID
+  // https://drive.google.com/uc?export=view&id=FILE_ID
   if (!fileId) {
     const idMatch = url.match(/[?&]id=([^&]+)/);
     if (idMatch) fileId = idMatch[1];
   }
 
   if (fileId) {
-    // /thumbnail è più affidabile di uc?export=view su browser moderni
-    return `https://drive.google.com/thumbnail?id=${fileId}&sz=${size}`;
+    // Endpoint non ufficiale di Google (usato internamente per le anteprime),
+    // garantisce tempi di caricamento più rapidi aggirando i redirect.
+    // Nota: essendo non ufficiale, potenzialmente soggetto a cambiamenti futuri.
+    return `https://lh3.googleusercontent.com/d/${fileId}`;
   }
 
   return url; // formato non riconosciuto → restituisce inalterato
@@ -426,8 +429,9 @@ function buildCarousel(images, bikeName, icon) {
   }
   const slides = images.map(url =>
     `<div class="carousel__slide">
-      <img src="${url}" alt="${escapeHtml(bikeName)}" loading="lazy" decoding="async"
-        onerror="this.parentElement.style.background='var(--color-surface-raised)';this.style.display='none'">
+      <div class="carousel__bg" style="background-image: url('${url}')"></div>
+      <img src="${url}" alt="${escapeHtml(bikeName)}" loading="lazy" decoding="async" style="aspect-ratio: 4/3;"
+        onerror="this.parentElement.style.background='var(--color-surface-raised)';this.style.display='none';if(this.previousElementSibling)this.previousElementSibling.style.display='none';">
     </div>`
   ).join('');
   const dots = images.map((_, i) =>
