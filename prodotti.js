@@ -580,7 +580,56 @@ function closeModal() {
 /* ─── EVENT LISTENERS ─────────────────────────────────────── */
 modal?.querySelector('.product-modal__close')?.addEventListener('click', closeModal);
 modal?.querySelector('.product-modal__backdrop')?.addEventListener('click', closeModal);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+document.addEventListener('keydown', e => { 
+  if (e.key === 'Escape') {
+    if (document.querySelector('.image-lightbox.open')) {
+      closeLightbox();
+    } else {
+      closeModal();
+    }
+  } 
+});
+
+let lightboxEl = null;
+
+function openLightbox(src) {
+  if (!lightboxEl) {
+    lightboxEl = document.createElement('div');
+    lightboxEl.className = 'image-lightbox';
+    lightboxEl.setAttribute('role', 'dialog');
+    lightboxEl.setAttribute('aria-modal', 'true');
+    lightboxEl.innerHTML = `
+      <button class="image-lightbox__close" aria-label="Chiudi ingrandimento">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <img src="" alt="Immagine ingrandita">
+    `;
+    document.body.appendChild(lightboxEl);
+    
+    lightboxEl.addEventListener('click', e => {
+      if (e.target === lightboxEl || e.target.closest('.image-lightbox__close') || e.target.tagName === 'IMG') {
+        closeLightbox();
+      }
+    });
+  }
+  
+  lightboxEl.querySelector('img').src = src;
+  lightboxEl.classList.add('open');
+}
+
+function closeLightbox() {
+  if (lightboxEl) {
+    lightboxEl.classList.remove('open');
+  }
+}
+
+document.addEventListener('click', e => {
+  const slideImg = e.target.closest('.carousel__slide img');
+  if (slideImg && slideImg.src) {
+    openLightbox(slideImg.src);
+  }
+});
 
 sortSelect?.addEventListener('change', e => {
   activeSort = e.target.value;
