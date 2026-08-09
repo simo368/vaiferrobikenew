@@ -583,8 +583,8 @@ p{line-height:1.7}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .service-cards{grid-template-columns:1fr}
   .hero__inner{grid-template-columns:1fr}
-  .hero__visual{display:none}
-  .hero__title{font-size:clamp(4rem,12vw,6rem)}
+  .hero__title{font-size:clamp(3.5rem,12vw,6rem);text-wrap:balance}
+  h1, h2 { text-wrap: balance; }
   .editorial-split{grid-template-columns:1fr}
   .editorial-split.reverse > *:first-child{order:unset}
   .editorial-split.reverse > *:last-child{order:unset}
@@ -594,7 +594,22 @@ p{line-height:1.7}
   .nav{display:none}
   .menu-toggle{display:flex}
   .header .btn.desktop-cta{display:none}
-  .sticky-bar{display:flex}
+  /* Task 3: Sticky Floating Pill */
+  .sticky-bar {
+    display: flex;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    width: calc(100% - 32px);
+    max-width: 400px;
+    border-radius: var(--r-full);
+    box-shadow: var(--shadow-float);
+    padding: 8px;
+    border-top: none;
+    border: 1px solid var(--border);
+  }
+  .sticky-bar .btn { min-height: 44px; } /* Ensure touch target */
   .contact-layout{grid-template-columns:1fr}
   .team-card{grid-template-columns:1fr;text-align:center}
   .mini-grid{grid-template-columns:1fr}
@@ -617,5 +632,21 @@ p{line-height:1.7}
   .filter-sort-wrap { margin-left: 0; width: 100%; }
   .sort-select { width: 100%; height: 44px; font-size: 16px; }
   .product-card__body { padding: 16px; }
+  
+  /* Task 1: Hero Visual su Mobile */
+  .hero__visual { display: flex; max-width: min(85vw, 380px); margin: 32px auto 0; }
+  .hero__card { position: static; margin-top: 24px; width: 100%; max-width: none; }
+  
+  /* Task 2: Mobile Drawer potenziato */
+  .mobile-drawer__panel { width: min(400px, 92vw); }
+  .mobile-drawer__backdrop { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .mobile-nav a { font-size: clamp(1.3rem, 5vw, 1.6rem); font-family: var(--font-heading); padding-block: 16px; text-transform: uppercase; min-height: 44px; }
+  
+  /* Task 4: Padding e respiri generali */
+  .service-card, .mini-card, .team-card { padding: 24px; }
+}
+
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  .wheel-spin, .wheel-spin-slow { animation: none !important; }
 }
 
