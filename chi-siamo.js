@@ -155,7 +155,7 @@ function renderPhoto(containerId, src, alt) {
   const el = document.getElementById(containerId);
   if (!el || !src) return;
   el.innerHTML = `<img src="${src}" alt="${csEsc(alt)}" loading="lazy"
-    style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg)"
+    style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);display:block"
     onerror="this.parentElement.style.display='none'">`;
   el.style.display = 'block';
 }

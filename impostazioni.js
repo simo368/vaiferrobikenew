@@ -170,7 +170,7 @@ function applyConfig() {
     const url = window.VAIFB[key];
     if (url && url.trim() !== '') {
       const imgUrl = vaifbDriveUrl(url);
-      el.innerHTML = `<img src="${imgUrl}" alt="${key}" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:var(--r-xl)" onerror="this.parentElement.style.display='none'">`;
+      el.innerHTML = `<img src="${imgUrl}" alt="${key}" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:var(--r-xl);display:block" onerror="this.parentElement.style.display='none'">`;
       el.classList.remove('editorial-visual__ph');
       el.style.display = 'block';
       el.style.padding = '0';
