@@ -1,7 +1,7 @@
 /* ════════════════════════════════════════════════════════════════════
    VAI FERRO BIKE — style.css v3.0  Dark-first, Bebas Neue + Inter.
    ════════════════════════════════════════════════════════════════════ */
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
+
 
 /* ─── TOKENS DARK ───────────────────────────────────────────────── */
 :root {
@@ -94,6 +94,7 @@ p{line-height:1.7}
 .brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
 .brand-mark{width:38px;height:38px;color:var(--accent);flex-shrink:0}
 .brand-mark svg{width:100%;height:100%}
+.brand-mark img{width:100%;height:100%;object-fit:cover;border-radius:50%;border:1px solid var(--border)}
 .brand-name{display:flex;flex-direction:column;line-height:1.1}
 .brand-name strong{font-family:var(--font-heading);font-size:1.1rem;letter-spacing:.06em}
 .brand-name span{font-size:12px;color:var(--text-muted);letter-spacing:.04em}
@@ -574,10 +575,6 @@ p{line-height:1.7}
 .footer-bottom{border-top:1px solid var(--border);margin-top:clamp(32px,4vw,48px);padding-top:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .footer-bottom p{font-size:12px;color:var(--text-subtle)}
 
-/* ─── WHEEL ANIMATION ─────────────────────────────────────────────── */
-.wheel-spin{transform-origin:center;animation:wheelSpin 8s linear infinite}
-.wheel-spin-slow{animation-duration:16s}
-@keyframes wheelSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
 /* ─── RESPONSIVE ──────────────────────────────────────────────────── */
 @media(max-width:1024px){
@@ -648,7 +645,4 @@ p{line-height:1.7}
   .service-card, .mini-card, .team-card { padding: 24px; }
 }
 
-@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
-  .wheel-spin, .wheel-spin-slow { animation: none !important; }
 }
-

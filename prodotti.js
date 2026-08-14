@@ -13,7 +13,7 @@
    COLONNE SUPPORTATE NEL FOGLIO:
    Nome | Marca | Categoria | Descrizione_Breve | Descrizione_Completa
    Prezzo | Disponibile | In_Evidenza | Immagine | Caratteristiche
-   Taglia | Colore | Anno | Ordinamento | Note
+   Taglia | Colore | Colore_Immagini | Anno | Ordinamento | Note
 
    FORMATO IMMAGINE (colonna "Immagine"):
    - Link Google Drive (si convertono automaticamente):
@@ -23,6 +23,11 @@
        https://... qualsiasi URL diretto a un'immagine
    - Più immagini separate da | (pipe):
        https://drive.google.com/file/d/ABC/view|https://drive.google.com/file/d/XYZ/view
+
+   VARIANTI COLORE (colonna "Colore_Immagini", opzionale):
+   - Associa immagini specifiche ai colori definiti nella colonna "Colore".
+   - Formato: NomeColore: url1,url2 | AltroColore: url3
+       es: Nero: https://.../img1.jpg,https://.../img2.jpg | Blu: https://.../img3.jpg
 */
 
 const CONFIG = {
@@ -33,8 +38,8 @@ const CONFIG = {
 
 /* ─── DATI DEMO (usati finché SHEET_ID non è configurato) ──── */
 const DEMO_BIKES = [
-  { Nome: 'Trek Marlin 5', Marca: 'Trek', Categoria: 'MTB', Descrizione_Breve: 'Hardtail versatile per sentieri e uso misto. Forcella ammortizzata, freni a disco.', Descrizione_Completa: 'La Trek Marlin 5 è la scelta ideale per chi vuole avvicinarsi al mountain bike senza compromessi. Forcella SR Suntour XCT da 100mm, freni idraulici Tektro, cambio Shimano Altus 21V. Ruote 29" per un rotolamento fluido e veloce.', Prezzo: 'da €799', Disponibile: 'SI', In_Evidenza: 'SI', Immagine: '', Caratteristiche: 'Forcella 100mm|Freni a disco idraulici|Cambio Shimano 21V|Ruote 29"', Taglia: 'S,M,L,XL', Colore: 'Nero|Blu', Anno: '2024', Ordinamento: '10', Note: '' },
-  { Nome: 'Bianchi E-Omnia T', Marca: 'Bianchi', Categoria: 'E-Bike', Descrizione_Breve: 'E-bike da trekking con motore Bosch. Autonomia fino a 120km, display integrato.', Descrizione_Completa: 'La Bianchi E-Omnia T unisce il fascino del brand storico alla tecnologia moderna. Motore Bosch Active Line Plus, batteria 500Wh, display Purion. Perfetta per pendolari e appassionati di cicloturismo.', Prezzo: 'da €2.499', Disponibile: 'SI', In_Evidenza: 'SI', Immagine: '', Caratteristiche: 'Motore Bosch|Batteria 500Wh|Autonomia ~120km|Display Purion', Taglia: 'S,M,L', Colore: 'Celeste|Nero', Anno: '2024', Ordinamento: '20', Note: 'Disponibile in più taglie' },
+  { Nome: 'Trek Marlin 5', Marca: 'Trek', Categoria: 'MTB', Descrizione_Breve: 'Hardtail versatile per sentieri e uso misto. Forcella ammortizzata, freni a disco.', Descrizione_Completa: 'La Trek Marlin 5 è la scelta ideale per chi vuole avvicinarsi al mountain bike senza compromessi. Forcella SR Suntour XCT da 100mm, freni idraulici Tektro, cambio Shimano Altus 21V. Ruote 29" per un rotolamento fluido e veloce.', Prezzo: 'da €799', Disponibile: 'SI', In_Evidenza: 'SI', Immagine: 'https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?auto=format&fit=crop&w=1200&q=80', Caratteristiche: 'Forcella 100mm|Freni a disco idraulici|Cambio Shimano 21V|Ruote 29"', Taglia: 'S,M,L,XL', Colore: 'Nero|Blu', Colore_Immagini: 'Nero: https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?auto=format&fit=crop&w=1200&q=80 | Blu: https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?auto=format&fit=crop&w=1200&q=80', Anno: '2024', Ordinamento: '10', Note: '' },
+  { Nome: 'Bianchi E-Omnia T', Marca: 'Bianchi', Categoria: 'E-Bike', Descrizione_Breve: 'E-bike da trekking con motore Bosch. Autonomia fino a 120km, display integrato.', Descrizione_Completa: 'La Bianchi E-Omnia T unisce il fascino del brand storico alla tecnologia moderna. Motore Bosch Active Line Plus, batteria 500Wh, display Purion. Perfetta per pendolari e appassionati di cicloturismo.', Prezzo: 'da €2.499', Disponibile: 'SI', In_Evidenza: 'SI', Immagine: '', Caratteristiche: 'Motore Bosch|Batteria 500Wh|Autonomia ~120km|Display Purion', Taglia: 'S,M,L', Colore: 'Celeste|Nero', Colore_Immagini: '', Anno: '2024', Ordinamento: '20', Note: 'Disponibile in più taglie' },
   { Nome: 'Cube Nature', Marca: 'Cube', Categoria: 'Trekking', Descrizione_Breve: 'Bici da trekking polivalente, ideale per percorsi misti e lunghe uscite su strada e sterrato.', Descrizione_Completa: 'La Cube Nature è progettata per chi ama pedalare senza limiti. Telaio in alluminio leggero, forcella rigida, pneumatici 700x42c per aderenza su tutti i fondi.', Prezzo: 'da €699', Disponibile: 'SI', In_Evidenza: 'NO', Immagine: '', Caratteristiche: 'Telaio alluminio|Pneumatici 700x42c|Cambio Shimano 24V|Portapacchi incluso', Taglia: 'XS,S,M,L', Colore: 'Grigio|Verde', Anno: '2024', Ordinamento: '30', Note: '' },
   { Nome: 'Cannondale Quick 4', Marca: 'Cannondale', Categoria: 'City Bike', Descrizione_Breve: 'Bici urbana veloce e leggera. Per commuter esigenti che non vogliono rinunciare alle prestazioni.', Descrizione_Completa: 'La Cannondale Quick 4 è la scelta dei professionisti urbani. Telaio SmartForm C3, manubrio flat bar, freni a disco meccanici. Agile nel traffico, veloce in rettilineo.', Prezzo: 'da €649', Disponibile: 'SI', In_Evidenza: 'NO', Immagine: '', Caratteristiche: 'Telaio SmartForm C3|Freni a disco meccanici|Ruote 700c|Peso 10.8kg', Taglia: 'XS,S,M,L,XL', Colore: 'Nero|Bianco', Anno: '2023', Ordinamento: '40', Note: '' },
   { Nome: 'Trek Checkpoint ALR 5', Marca: 'Trek', Categoria: 'Gravel', Descrizione_Breve: 'Gravel bike da avventura. Perfetta per lunghe uscite su strade bianche e percorsi misti.', Descrizione_Completa: 'La Trek Checkpoint ALR 5 è costruita per chi vuole esplorare. Telaio Alpha Platinum Aluminium, forcella IsoSpeed, compatibilità con pneumatici fino a 45mm. Portapacchi e borse laterali integrabili.', Prezzo: 'da €1.299', Disponibile: 'SI', In_Evidenza: 'SI', Immagine: '', Caratteristiche: 'Forcella IsoSpeed|Pneumatici 40mm|Cambio Shimano GRX|Attacchi borse', Taglia: 'XS,S,M,L,XL', Colore: 'Verde|Grigio', Anno: '2024', Ordinamento: '50', Note: '' },
@@ -121,6 +126,23 @@ function parseImages(raw, size = 'w1200') {
   return raw.split(/[|,]/)
     .map(u => convertDriveUrl(u.trim(), size))
     .filter(u => u.startsWith('http'));
+}
+
+/* ─── PARSE COLOR IMAGES ──────────────────────────────────── */
+function parseColorImages(raw, size = 'w1200') {
+  if (!raw || !raw.trim()) return null;
+  const result = {};
+  raw.split('|').forEach(part => {
+    const splitIdx = part.indexOf(':');
+    if (splitIdx > -1) {
+      const color = part.substring(0, splitIdx).trim();
+      const urls = part.substring(splitIdx + 1).trim();
+      if (color && urls) {
+        result[color] = parseImages(urls, size);
+      }
+    }
+  });
+  return Object.keys(result).length > 0 ? result : null;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -490,6 +512,8 @@ function openModal(bike) {
   if (!modal) return;
   const icon = CATEGORY_ICONS[bike.Categoria] || DEFAULT_ICON;
   const images = parseImages(bike.Immagine, 'w800');
+  const colorImagesMap = parseColorImages(bike.Colore_Immagini, 'w800');
+  
   const waText = encodeURIComponent(`${CONFIG.WA_BASE_MSG}${bike.Nome} (${bike.Categoria}). Vorrei sapere disponibilità e prezzo.`);
   const features = bike.Caratteristiche
     ? bike.Caratteristiche.split('|').map(f => f.trim()).filter(Boolean)
@@ -531,7 +555,13 @@ function openModal(bike) {
   const infoChips = [];
   if (bike.Colore) {
     bike.Colore.split('|').forEach(c => {
-      infoChips.push(`<span class="info-chip">🎨 ${escapeHtml(c.trim())}</span>`);
+      const colorName = c.trim();
+      if (colorImagesMap && colorImagesMap[colorName]) {
+        // Render come swatch cliccabile
+        infoChips.push(`<button type="button" class="info-chip color-swatch" data-color="${escapeHtml(colorName)}" style="cursor:pointer; border:1px solid var(--border); transition: border-color var(--t-fast) ease">🎨 ${escapeHtml(colorName)}</button>`);
+      } else {
+        infoChips.push(`<span class="info-chip">🎨 ${escapeHtml(colorName)}</span>`);
+      }
     });
   }
   if (infoChips.length) {
@@ -539,6 +569,30 @@ function openModal(bike) {
     infoEl.innerHTML = `<div class="info-chips-list">${infoChips.join('')}</div>`;
   } else {
     infoEl.hidden = true;
+  }
+
+  // Aggiunta Event Listener per i colori cliccabili
+  const swatches = modal.querySelectorAll('.color-swatch');
+  if (swatches.length) {
+    swatches.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const color = e.currentTarget.dataset.color;
+        const newImages = colorImagesMap[color];
+        if (newImages) {
+          swatches.forEach(s => s.style.borderColor = 'var(--border)');
+          e.currentTarget.style.borderColor = 'var(--accent)';
+          
+          visualEl.style.transition = 'opacity var(--t-mid) var(--ease-out)';
+          visualEl.style.opacity = '0';
+          setTimeout(() => {
+            visualEl.innerHTML = buildCarousel(newImages, bike.Nome, icon);
+            const newCarousel = visualEl.querySelector('.carousel');
+            if (newCarousel && newImages.length > 1) initCarousel(newCarousel);
+            visualEl.style.opacity = '1';
+          }, 350); // attende la transizione
+        }
+      });
+    });
   }
 
   // Caratteristiche
