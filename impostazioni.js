@@ -175,6 +175,8 @@ function applyConfig() {
       el.style.display = 'block';
       el.style.padding = '0';
       el.style.border = 'none';
+      el.style.width = '100%';
+      el.style.height = '100%';
     }
   });
 }
