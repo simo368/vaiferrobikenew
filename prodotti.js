@@ -452,7 +452,7 @@ function buildCarousel(images, bikeName, icon) {
   const slides = images.map(url =>
     `<div class="carousel__slide">
       <div class="carousel__bg" style="background-image: url('${url}')"></div>
-      <img src="${url}" alt="${escapeHtml(bikeName)}" loading="lazy" decoding="async" style="aspect-ratio: 4/3;"
+      <img src="${url}" alt="${escapeHtml(bikeName)}" loading="lazy" decoding="async"
         onerror="this.parentElement.style.background='var(--color-surface-raised)';this.style.display='none';if(this.previousElementSibling)this.previousElementSibling.style.display='none';">
     </div>`
   ).join('');

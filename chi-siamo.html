@@ -59,20 +59,36 @@
       </div>
     </section>
 
-    <!-- Titolare -->
+    <!-- Team (titolare + socio opzionale) -->
     <section class="section">
       <div class="container">
-        <div id="cs-titolare">
-          <div class="team-card reveal">
-            <div class="team-photo" id="cs-foto-titolare">
-              <div class="team-photo__ph">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+        <div id="cs-team-grid">
+          <div id="cs-titolare">
+            <div class="team-card reveal">
+              <div class="team-photo" id="cs-foto-titolare">
+                <div class="team-photo__ph">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+                </div>
+              </div>
+              <div class="team-info">
+                <span class="eyebrow" id="cs-ruolo-titolare">Titolare e meccanico</span>
+                <h2 id="cs-nome-titolare">Marco Rossi</h2>
+                <p id="cs-bio-titolare">Appassionato di bici da sempre, in negozio dal primo giorno. Ogni consiglio è frutto di esperienza reale, non di catalogo.</p>
               </div>
             </div>
-            <div class="team-info">
-              <span class="eyebrow" id="cs-ruolo-titolare">Titolare e meccanico</span>
-              <h2 id="cs-nome-titolare">Il titolare</h2>
-              <p id="cs-bio-titolare">Appassionato di bici da sempre, in negozio dal primo giorno. Ogni consiglio è frutto di esperienza reale, non di catalogo.</p>
+          </div>
+          <div id="cs-socio" hidden>
+            <div class="team-card reveal">
+              <div class="team-photo" id="cs-foto-socio">
+                <div class="team-photo__ph">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+                </div>
+              </div>
+              <div class="team-info">
+                <span class="eyebrow" id="cs-ruolo-socio">Socio</span>
+                <h2 id="cs-nome-socio">Il socio</h2>
+                <p id="cs-bio-socio"></p>
+              </div>
             </div>
           </div>
         </div>
