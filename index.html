@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it" data-theme="dark">
 <head>
   <meta charset="UTF-8">
@@ -31,10 +31,9 @@
       </a>
 
       <nav class="nav" aria-label="Principale">
-        <a href="servizi.html">Servizi</a>
-        <a href="officina.html">Officina</a>
+        <a href="prodotti.html">Bici</a>
         <a href="ebike.html">E-bike</a>
-        <a href="prodotti.html">Le nostre bici</a>
+        <a href="officina.html">Officina</a>
         <a href="chi-siamo.html">Chi siamo</a>
         <a href="contatti.html">Contatti</a>
       </nav>
@@ -65,10 +64,9 @@
         </button>
       </div>
       <nav class="mobile-nav" aria-label="Mobile">
-        <a href="servizi.html">Servizi</a>
-        <a href="officina.html">Officina</a>
+        <a href="prodotti.html">Bici</a>
         <a href="ebike.html">E-bike</a>
-        <a href="prodotti.html">Le nostre bici</a>
+        <a href="officina.html">Officina</a>
         <a href="chi-siamo.html">Chi siamo</a>
         <a href="contatti.html">Contatti</a>
       </nav>
@@ -82,7 +80,7 @@
   <main id="content">
 
     <!-- ═══ HERO ═══════════════════════════════════════════════════════ -->
-    <section class="hero">
+    <section class="hero hero--editorial">
       <div class="hero__bg">
         <div class="hero__bg-gradient"></div>
       </div>
@@ -100,149 +98,103 @@
             <span class="hero__slogan-row" data-vaifb-slogan="3">RIPARA.</span>
           </h1>
 
-          <p class="hero__lead reveal reveal-delay-2">
-            VAI FERRO BIKE è il negozio bici di Cavezzo per chi vuole comprare bene,
-            sistemare bene e parlare con persone che sanno davvero cosa stanno consigliando.
-          </p>
-          <div class="hero__cta btn-row reveal reveal-delay-3">
-            <a class="btn btn-primary" href="https://wa.me/393000000000?text=Ciao%20VAI%20FERRO%20BIKE%2C%20vorrei%20un%20consiglio." target="_blank" rel="noopener noreferrer">
+          <div class="hero__cta btn-row reveal reveal-delay-2" style="margin-top: 24px;">
+            <a class="btn btn-primary" href="https://wa.me/393000000000?text=Ciao%20VAI%20FERRO%20BIKE%2C%20vorrei%20informazioni." target="_blank" rel="noopener noreferrer">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-              WhatsApp diretto
+              SCRIVICI SU WHATSAPP
             </a>
-            <a class="btn btn-ghost" href="prodotti.html">Scopri le bici →</a>
-          </div>
-          <div class="hero__meta reveal reveal-delay-4">
-            <div class="hero__stat">
-              <strong data-count="10" data-suffix="+">10+</strong>
-              <span>anni di esperienza</span>
-            </div>
-            <div class="hero__stat-div"></div>
-            <div class="hero__stat">
-              <strong data-count="50" data-suffix="+">50+</strong>
-              <span>modelli in negozio</span>
-            </div>
+            <a class="btn btn-ghost" href="#servizi">COSA FACCIAMO ↓</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ SERVICES ════════════════════════════════════════════════════ -->
-    <section class="section">
-      <div class="container">
-        <div class="section-heading reveal">
-          <span class="eyebrow">Cosa facciamo</span>
-          <h2 data-vaifb="Home_Titolo_Servizi">Tutto ciò di cui<br>hai bisogno, qui.</h2>
-          <p class="lead" data-vaifb="Home_Testo_Servizi">Vendita, officina, e-bike e consulenza. Un solo posto, persone vere.</p>
+    <!-- ═══ EDITORIAL SERVICES ═════════════════════════════════════════ -->
+    <section id="servizi" class="section ed-services-section">
+      <div class="container container-sm">
+        <div class="ed-services-list">
+          <a class="ed-service reveal" href="prodotti.html">
+            <div class="ed-service__num">01</div>
+            <div class="ed-service__content">
+              <h2 data-vaifb="Home_Servizio_1_Titolo">BICI</h2>
+              <p data-vaifb="Home_Servizio_1_Testo">MTB · GRAVEL · CITY · CORSA</p>
+            </div>
+            <div class="ed-service__arrow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+          
+          <a class="ed-service reveal reveal-delay-1" href="officina.html">
+            <div class="ed-service__num">02</div>
+            <div class="ed-service__content">
+              <h2 data-vaifb="Home_Servizio_2_Titolo">OFFICINA</h2>
+              <p data-vaifb="Home_Servizio_2_Testo">RIPARAZIONI · TAGLIANDI · E-BIKE</p>
+            </div>
+            <div class="ed-service__arrow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+          
+          <a class="ed-service reveal reveal-delay-2" href="ebike.html">
+            <div class="ed-service__num">03</div>
+            <div class="ed-service__content">
+              <h2 data-vaifb="Home_Servizio_3_Titolo">E-BIKE</h2>
+              <p data-vaifb="Home_Servizio_3_Testo">CONSULENZA · TEST · ASSISTENZA</p>
+            </div>
+            <div class="ed-service__arrow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
         </div>
-        <div class="service-cards">
-          <a class="service-card reveal" href="prodotti.html">
-            <div class="service-card__num">01</div>
-            <div class="service-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3-4 3h7.5"/><path d="M16 11.5L13 17.5"/><path d="M15 5h-4l-3 3"/></svg>
-            </div>
-            <h3 data-vaifb="Home_Servizio_1_Titolo">Negozio bici</h3>
-            <p data-vaifb="Home_Servizio_1_Testo">MTB, city bike, gravel, trekking, bici da corsa e bici bambino. Ti aiutiamo a scegliere la bici giusta per il tuo uso e il tuo budget.</p>
-            <span class="service-card__link">Vedi le bici <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-          </a>
-          <a class="service-card reveal reveal-delay-1" href="officina.html">
-            <div class="service-card__num">02</div>
-            <div class="service-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-            </div>
-            <h3 data-vaifb="Home_Servizio_2_Titolo">Officina</h3>
-            <p data-vaifb="Home_Servizio_2_Testo">Riparazioni rapide, manutenzione, regolazione cambio e freni, sostituzione gomme, revisione completa. Anche per e-bike.</p>
-            <span class="service-card__link">Prenota in officina <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-          </a>
-          <a class="service-card reveal reveal-delay-2" href="ebike.html">
-            <div class="service-card__num">03</div>
-            <div class="service-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            </div>
-            <h3 data-vaifb="Home_Servizio_3_Titolo">E-bike</h3>
-            <p data-vaifb="Home_Servizio_3_Testo">Consulenza guidata sul budget, scelta del modello giusto per il tuo uso e assistenza tecnica post-vendita direttamente in negozio.</p>
-            <span class="service-card__link">Scopri le e-bike <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-          </a>
+      </div>
+    </section>
+
+    <!-- ═══ FOTOGRAFIA REALE ════════════════════════════════════════════ -->
+    <section class="section-sm photo-editorial">
+      <div class="container">
+        <div class="photo-editorial__inner reveal">
+          <div class="photo-editorial__text">
+            <h2>QUI SI RIPARA.<br>QUI SI PEDALA.</h2>
+          </div>
+          <!-- L'immagine apparirà qui se caricata da Google Sheets -->
+          <div class="photo-editorial__img" id="home-foto-negozio" data-vaifb-img="Foto_Negozio_Home" style="display: none;"></div>
         </div>
       </div>
     </section>
 
     <!-- ═══ STATS ════════════════════════════════════════════════════════ -->
-    <section class="section-sm" style="background:var(--surface);border-block:1px solid var(--border)">
-      <div class="container">
-        <div class="stats-grid reveal">
-          <div class="stat-item">
-            <span class="stat-num" data-count="10" data-suffix="+" data-vaifb="Home_Stat_1_Numero">10+</span>
-            <span class="stat-label" data-vaifb="Home_Stat_1_Etichetta">Anni di esperienza</span>
+    <section class="section stat-editorial-section">
+      <div class="container container-sm">
+        <div class="stat-editorial-grid reveal">
+          <div class="stat-editorial-item">
+            <span class="stat-editorial-num" data-count="10" data-suffix="+" data-vaifb="Home_Stat_1_Numero">10+</span>
+            <span class="stat-editorial-label" data-vaifb="Home_Stat_1_Etichetta">Anni</span>
           </div>
-          <div class="stat-item">
-            <span class="stat-num" data-count="50" data-suffix="+" data-vaifb="Home_Stat_2_Numero">50+</span>
-            <span class="stat-label" data-vaifb="Home_Stat_2_Etichetta">Modelli in negozio</span>
+          <div class="stat-editorial-item">
+            <span class="stat-editorial-num" data-count="50" data-suffix="+" data-vaifb="Home_Stat_2_Numero">50+</span>
+            <span class="stat-editorial-label" data-vaifb="Home_Stat_2_Etichetta">Modelli</span>
           </div>
-
-          <div class="stat-item">
-            <span class="stat-num" data-vaifb="Home_Stat_3_Numero">0</span>
-            <span class="stat-label" data-vaifb="Home_Stat_3_Etichetta">Compromessi sulla qualità</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ EDITORIAL (Perché noi) ══════════════════════════════════════ -->
-    <section class="section">
-      <div class="container">
-        <div class="editorial-split">
-          <div class="editorial-visual reveal">
-            <div class="editorial-visual__ph" id="home-foto-negozio" data-vaifb-img="Foto_Negozio_Home">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
-              <span>Foto negozio<br>(aggiungi in Foglio "Impostazioni" alla voce Foto_Negozio_Home)</span>
-            </div>
-          </div>
-          <div class="editorial-copy reveal reveal-delay-1">
-            <span class="eyebrow">Perché sceglierci</span>
-            <h2>Le persone non cercano solo una bici.</h2>
-            <p>Cercano qualcuno di cui fidarsi. Professionisti che ascoltano, consigliano con onestà e rimangono disponibili anche dopo l'acquisto.</p>
-            <div class="why-list">
-              <div class="why-item">
-                <div class="why-icon">1</div>
-                <div class="why-text">
-                  <strong>Competenza tecnica e commerciale.</strong>
-                  <p>Non solo prodotti: spiegazioni, confronto, orientamento e soluzione concreta.</p>
-                </div>
-              </div>
-              <div class="why-item">
-                <div class="why-icon">2</div>
-                <div class="why-text">
-                  <strong>Rapporto diretto e umano.</strong>
-                  <p>Chi entra sente di parlare con una persona, non con un catalogo.</p>
-                </div>
-              </div>
-              <div class="why-item">
-                <div class="why-icon">3</div>
-                <div class="why-text">
-                  <strong>Officina che funziona davvero.</strong>
-                  <p>Rapidità, precisione e un prezzo onesto su ogni intervento.</p>
-                </div>
-              </div>
-            </div>
-            <div class="btn-row">
-              <a class="btn btn-ghost" href="chi-siamo.html">Chi siamo →</a>
-            </div>
+          <div class="stat-editorial-item">
+            <span class="stat-editorial-num" data-vaifb="Home_Stat_3_Numero">1</span>
+            <span class="stat-editorial-label" data-vaifb="Home_Stat_3_Etichetta">Negozio vero</span>
           </div>
         </div>
       </div>
     </section>
-
-
 
     <!-- ═══ CTA FINALE ══════════════════════════════════════════════════ -->
-    <div class="cta-band">
-      <div class="container cta-band__inner">
-        <span class="eyebrow reveal">Contattaci ora</span>
-        <h2 class="reveal" data-vaifb="Home_CTA_Titolo">Vieni a trovarci o scrivici.</h2>
-        <p class="reveal" data-vaifb="Home_CTA_Testo">Via Volturno 86, Cavezzo. Aperti dal lunedì al sabato, 08:30–12:30 / 15:30–19:30.</p>
-        <div class="btn-row reveal">
-          <a class="btn btn-primary" href="https://wa.me/393000000000?text=Ciao%20VAI%20FERRO%20BIKE%2C%20vorrei%20informazioni." target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> WhatsApp diretto</a>
-          <a class="btn btn-ghost" href="contatti.html">Vedi mappa e orari</a>
+    <section class="section final-cta-section">
+      <div class="container">
+        <div class="final-cta reveal">
+          <h2 data-vaifb="Home_CTA_Titolo">HAI UNA BICI<br>DA SISTEMARE?</h2>
+          <div class="btn-row justify-center reveal reveal-delay-1" style="justify-content: center;">
+            <a class="btn btn-primary" href="https://wa.me/393000000000?text=Ciao%20VAI%20FERRO%20BIKE%2C%20vorrei%20informazioni." target="_blank" rel="noopener noreferrer" style="height: 64px; padding: 0 40px; font-size: 16px; border-radius: var(--r-full);">
+              SCRIVICI SU WHATSAPP <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-left:4px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+          <p class="final-cta-meta reveal reveal-delay-2" data-vaifb="Home_CTA_Testo" style="margin-top: 32px; color: var(--text-muted); font-size: 14px;">
+            Via Volturno 86, Cavezzo. Aperti dal lunedì al sabato.
+          </p>
         </div>
       </div>
     </div>
@@ -262,14 +214,7 @@
         </div>
         <div class="footer-col">
           <h5>Navigazione</h5>
-          <div class="footer-links">
-            <a href="servizi.html">Servizi</a>
-            <a href="officina.html">Officina</a>
-            <a href="ebike.html">E-bike</a>
-            <a href="prodotti.html">Le nostre bici</a>
-            <a href="chi-siamo.html">Chi siamo</a>
-            <a href="contatti.html">Contatti</a>
-          </div>
+          <div class="footer-links"><a href="prodotti.html">Bici</a><a href="ebike.html">E-bike</a><a href="officina.html">Officina</a><a href="chi-siamo.html">Chi siamo</a><a href="contatti.html">Contatti</a></div>
         </div>
         <div class="footer-col">
           <h5>Sede</h5>
