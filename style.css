@@ -734,37 +734,53 @@ p {
 .hero__inner {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
   padding-block: 80px
 }
 
 .hero__copy {
   display: flex;
-  flex-direction: column
+  flex-direction: column;
+  align-items: center
 }
 
 .hero__kicker {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 24px
+  margin-bottom: 28px;
+  justify-content: center
 }
 
-.hero__title {
+/* ─── SLOGAN TIPOGRAFICO HERO ─────────────────────────────────── */
+.hero__slogan {
   font-family: var(--font-heading);
-  font-size: clamp(4rem, 9vw, 9rem);
+  font-size: clamp(4.5rem, 14vw, 13rem);
   line-height: .88;
   text-transform: uppercase;
-  margin-bottom: 24px
+  letter-spacing: -.02em;
+  margin-bottom: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: .05em
+}
+
+.hero__slogan-row {
+  display: block;
+  color: var(--text)
+}
+
+.hero__slogan-row.hero__slogan-accent {
+  color: var(--accent)
 }
 
 .hero__lead {
   font-size: clamp(1rem, 1.8vw, 1.2rem);
   color: var(--text-muted);
-  max-width: 48ch;
+  max-width: 52ch;
   margin-bottom: 32px
 }
 
@@ -2690,12 +2706,11 @@ p {
   }
 
   .hero__inner {
-    grid-template-columns: 1fr
+    padding-block: 60px
   }
 
-  .hero__title {
-    font-size: clamp(3.5rem, 12vw, 6rem);
-    text-wrap: balance
+  .hero__slogan {
+    font-size: clamp(3.5rem, 18vw, 7rem)
   }
 
   h1,
@@ -2862,17 +2877,7 @@ p {
     padding: 16px;
   }
 
-  /* Hero Visual e Gallery su Mobile */
-  .hero__visual {
-    display: flex;
-    max-width: min(90vw, 420px);
-    margin: 32px auto 0;
-  }
 
-  .hero-gallery {
-    max-height: 300px;
-    aspect-ratio: 4/3;
-  }
 
   /* Task 2: Mobile Drawer potenziato */
   .mobile-drawer__panel {

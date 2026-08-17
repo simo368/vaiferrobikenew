@@ -54,6 +54,11 @@ window.VAIFB = {
   Foto_Hero_3: '',
   Foto_Hero_4: '',
   Foto_Hero_5: '',
+  // Slogan hero a 3 righe (tab Impostazioni: Hero_Riga_1, Hero_Riga_2, Hero_Riga_3, Hero_Accento)
+  Hero_Riga_1:  'PEDALA.',
+  Hero_Riga_2:  'VIVI.',
+  Hero_Riga_3:  'RIPARA.',
+  Hero_Accento: '2',  // numero della riga con colore accent (1, 2 o 3)
 };
 
 /* ─── PARSING CSV ROBUSTO (stesso algoritmo di prodotti.js) ──── */
@@ -188,6 +193,9 @@ function applyConfig() {
 
   /* ─── HERO GALLERY (Foto_Hero_1 ... Foto_Hero_5) ───────────────────── */
   initHeroGallery();
+
+  /* ─── SLOGAN HERO (Hero_Riga_1/2/3 + Hero_Accento) ────────────────── */
+  initHeroSlogan();
 }
 
 function vaifbDriveUrl(url) {
@@ -286,6 +294,31 @@ function initHeroGallery() {
   gallery.addEventListener('mouseleave', startAuto);
 
   startAuto();
+}
+
+/* ─── SLOGAN HERO ────────────────────────────────────────────────────── */
+function initHeroSlogan() {
+  const slogan = document.getElementById('heroSlogan');
+  if (!slogan) return; // non siamo sulla homepage
+
+  const accent = parseInt(window.VAIFB.Hero_Accento, 10) || 2;
+
+  [1, 2, 3].forEach(n => {
+    const text = (window.VAIFB[`Hero_Riga_${n}`] || '').trim();
+    const span = slogan.querySelector(`[data-vaifb-slogan="${n}"]`);
+    if (!span) return;
+
+    // Aggiorna testo se configurato nel foglio
+    if (text) span.textContent = text;
+
+    // Applica accent alla riga configurata
+    span.classList.toggle('hero__slogan-accent', n === accent);
+  });
+
+  // Aggiorna aria-label per accessibilità
+  const rows = [...slogan.querySelectorAll('[data-vaifb-slogan]')]
+    .map(s => s.textContent.trim()).join(' ');
+  if (rows) slogan.setAttribute('aria-label', rows);
 }
 
 /* ─── ESPORTA applyConfig per richiamo esterno (es. prodotti.js) */
