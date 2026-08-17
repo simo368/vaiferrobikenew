@@ -48,6 +48,12 @@ window.VAIFB = {
   // Mappa lat/lon (usata dalla pagina contatti)
   Lat:              '44.8327569',
   Lon:              '11.0342762',
+  // Foto hero gallery (tab Impostazioni: Foto_Hero_1 ... Foto_Hero_5)
+  Foto_Hero_1: '',
+  Foto_Hero_2: '',
+  Foto_Hero_3: '',
+  Foto_Hero_4: '',
+  Foto_Hero_5: '',
 };
 
 /* ─── PARSING CSV ROBUSTO (stesso algoritmo di prodotti.js) ──── */
@@ -179,6 +185,9 @@ function applyConfig() {
       el.style.height = '100%';
     }
   });
+
+  /* ─── HERO GALLERY (Foto_Hero_1 ... Foto_Hero_5) ───────────────────── */
+  initHeroGallery();
 }
 
 function vaifbDriveUrl(url) {
@@ -192,6 +201,91 @@ function vaifbDriveUrl(url) {
   }
   if (fileId) return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
   return url;
+}
+
+/* ─── HERO GALLERY ─────────────────────────────────────────────────────── */
+function initHeroGallery() {
+  const gallery = document.getElementById('heroGallery');
+  if (!gallery) return; // non siamo sulla homepage
+
+  // Raccoglie le URL configurate (Foto_Hero_1 ... Foto_Hero_5)
+  const urls = [1, 2, 3, 4, 5]
+    .map(n => (window.VAIFB[`Foto_Hero_${n}`] || '').trim())
+    .filter(Boolean)
+    .map(u => vaifbDriveUrl(u));
+
+  if (urls.length === 0) return; // nessuna foto → mostra placeholder, niente da fare
+
+  // Nasconde il placeholder
+  const placeholder = gallery.querySelector('.hero-gallery__placeholder');
+  if (placeholder) placeholder.style.display = 'none';
+
+  // Crea le slide
+  urls.forEach((url, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'hero-gallery__slide' + (i === 0 ? ' active' : '');
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = `Foto negozio ${i + 1}`;
+    img.loading = i === 0 ? 'eager' : 'lazy';
+    img.decoding = 'async';
+    img.onerror = function() {
+      // Slide con errore: la nascondiamo e andiamo avanti
+      this.parentElement.remove();
+    };
+    slide.appendChild(img);
+    gallery.appendChild(slide);
+  });
+
+  if (urls.length === 1) return; // 1 sola foto: statica, basta
+
+  // Crea i puntini indicatori
+  const dotsEl = document.createElement('div');
+  dotsEl.className = 'hero-gallery__dots';
+  urls.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'hero-gallery__dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Foto ${i + 1}`);
+    dot.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(dot);
+  });
+  gallery.appendChild(dotsEl);
+
+  let current = 0;
+  let timer = null;
+
+  function getSlides() {
+    return [...gallery.querySelectorAll('.hero-gallery__slide')];
+  }
+
+  function getDots() {
+    return [...dotsEl.querySelectorAll('.hero-gallery__dot')];
+  }
+
+  function goTo(index) {
+    const slides = getSlides();
+    const dots   = getDots();
+    if (!slides.length) return;
+    const n = ((index % slides.length) + slides.length) % slides.length;
+    slides[current]?.classList.remove('active');
+    dots[current]?.classList.remove('active');
+    current = n;
+    slides[current]?.classList.add('active');
+    dots[current]?.classList.add('active');
+  }
+
+  function startAuto() {
+    timer = setInterval(() => {
+      const slides = getSlides();
+      goTo((current + 1) % slides.length);
+    }, 4000);
+  }
+
+  // Pausa su hover per non disturbare chi guarda le foto
+  gallery.addEventListener('mouseenter', () => clearInterval(timer));
+  gallery.addEventListener('mouseleave', startAuto);
+
+  startAuto();
 }
 
 /* ─── ESPORTA applyConfig per richiamo esterno (es. prodotti.js) */

@@ -805,6 +805,7 @@ p {
   margin-inline: 8px
 }
 
+/* ─── HERO GALLERY (foto negozio in dissolvenza) ───────────────────── */
 .hero__visual {
   position: relative;
   display: flex;
@@ -812,52 +813,101 @@ p {
   justify-content: center
 }
 
-.hero__bike-svg {
+.hero-gallery {
+  position: relative;
   width: 100%;
-  max-width: 520px;
-  color: var(--text);
-  filter: drop-shadow(0 0 60px var(--accent-glow))
-}
-
-@keyframes wheelSpin {
-  from {
-    transform: rotate(0deg)
-  }
-
-  to {
-    transform: rotate(360deg)
-  }
-}
-
-.wheel-spin {
-  animation: wheelSpin 8s linear infinite;
-  transform-origin: center;
-  transform-box: fill-box;
-}
-
-.hero__card {
-  position: absolute;
-  bottom: 8%;
-  right: -4%;
-  background: var(--surface);
+  aspect-ratio: 4/3;
+  max-height: 480px;
+  border-radius: var(--r-xl);
+  overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 16px 20px;
-  backdrop-filter: blur(16px);
-  box-shadow: var(--shadow-float);
-  max-width: 220px
+  background: var(--surface-2);
+  box-shadow: var(--shadow-float)
 }
 
-.hero__card h4 {
-  font-size: .9rem;
-  margin-bottom: 4px
+.hero-gallery::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.55) 100%);
+  pointer-events: none;
+  z-index: 2
 }
 
-.hero__card p {
+.hero-gallery__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .9s ease;
+  z-index: 1
+}
+
+.hero-gallery__slide.active {
+  opacity: 1
+}
+
+.hero-gallery__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 8s ease
+}
+
+.hero-gallery__slide.active img {
+  transform: scale(1.06)
+}
+
+.hero-gallery__dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 3
+}
+
+.hero-gallery__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.4);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--t-fast) ease, transform var(--t-fast) ease
+}
+
+.hero-gallery__dot.active {
+  background: var(--accent);
+  transform: scale(1.35)
+}
+
+.hero-gallery__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px;
+  color: var(--text-subtle);
+  text-align: center
+}
+
+.hero-gallery__placeholder svg {
+  width: 80%;
+  max-width: 340px
+}
+
+.hero-gallery__placeholder p {
   font-size: 12px;
-  color: var(--text-muted);
-  line-height: 1.5
+  color: var(--text-subtle);
+  line-height: 1.6
 }
+
 
 /* ─── PAGE HERO ───────────────────────────────────────────────────── */
 .page-hero {
@@ -2812,18 +2862,16 @@ p {
     padding: 16px;
   }
 
-  /* Task 1: Hero Visual su Mobile */
+  /* Hero Visual e Gallery su Mobile */
   .hero__visual {
     display: flex;
-    max-width: min(85vw, 380px);
+    max-width: min(90vw, 420px);
     margin: 32px auto 0;
   }
 
-  .hero__card {
-    position: static;
-    margin-top: 24px;
-    width: 100%;
-    max-width: none;
+  .hero-gallery {
+    max-height: 300px;
+    aspect-ratio: 4/3;
   }
 
   /* Task 2: Mobile Drawer potenziato */
