@@ -704,7 +704,6 @@ p {
   display: grid;
   place-items: center;
   position: relative;
-  overflow: hidden;
   padding-top: 100px
 }
 
@@ -1109,7 +1108,7 @@ p {
 /* ─── STATS ───────────────────────────────────────────────────────── */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
@@ -1678,11 +1677,11 @@ p {
 
 .product-modal__visual {
   flex: 1.2;
-  background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 100%);
+  background: var(--surface);
   min-height: 320px;
   position: relative;
   border-bottom: 1px solid var(--border);
-  overflow: hidden;
+  overflow: hidden
 }
 
 .product-modal__visual::after {
@@ -1695,7 +1694,7 @@ p {
 }
 
 [data-theme="light"] .product-modal__visual {
-  background: radial-gradient(ellipse at center, #c8c8c4 0%, #bcbcb8 100%);
+  background: var(--surface)
 }
 
 [data-theme="light"] .product-modal__visual::after {
@@ -2698,7 +2697,7 @@ p {
   }
 
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr)
+    grid-template-columns: repeat(3, 1fr)
   }
 
   .service-cards {
@@ -2706,11 +2705,11 @@ p {
   }
 
   .hero__inner {
-    padding-block: 60px
+    padding-block: 48px
   }
 
   .hero__slogan {
-    font-size: clamp(3.5rem, 18vw, 7rem)
+    font-size: clamp(3rem, 18vw, 7rem)
   }
 
   h1,
@@ -2808,7 +2807,7 @@ p {
   }
 
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr)
+    grid-template-columns: repeat(3, 1fr)
   }
 
   /* Ottimizzazione spazio Filtri Mobile */
@@ -2902,5 +2901,67 @@ p {
   .mini-card,
   .team-card {
     padding: 24px;
+  }
+
+  /* Bug 1: Hero mobile - riduce altezza minima e padding */
+  .hero {
+    min-height: auto;
+    padding-top: 80px;
+    padding-bottom: 40px
+  }
+
+  /* Bug 2: Spazi verticali sezioni su mobile */
+  .section {
+    padding-block: clamp(40px, 8vw, 64px)
+  }
+
+  .section-sm {
+    padding-block: clamp(24px, 5vw, 40px)
+  }
+
+  .hero__inner {
+    padding-block: 32px
+  }
+
+  .hero__slogan {
+    font-size: clamp(3rem, 16vw, 6rem);
+    margin-bottom: 24px
+  }
+
+  .hero__lead {
+    font-size: 1rem;
+    margin-bottom: 24px
+  }
+
+  .hero__cta {
+    margin-bottom: 24px
+  }
+
+  /* Bug 3: Stats grid - 3 elementi su riga unica per mobile stretto */
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr)
+  }
+
+  .stat-item {
+    padding: 20px 12px
+  }
+
+  .stat-num {
+    font-size: clamp(1.8rem, 6vw, 2.5rem)
+  }
+
+  /* Bug 4: Modal foto - sfondo coerente con lo sheet */
+  .product-modal__visual {
+    background: var(--surface);
+    min-height: 220px;
+    height: 36vh
+  }
+
+  [data-theme="light"] .product-modal__visual {
+    background: var(--surface)
+  }
+
+  .carousel__bg {
+    filter: blur(20px) brightness(0.35)
   }
 }
