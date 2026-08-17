@@ -24,6 +24,7 @@
       Bio_Socio           | Testo breve sul socio...
       Foto_Socio          | https://drive.google.com/file/d/... (link Drive)
       Foto_Negozio        | https://drive.google.com/file/d/... (link Drive)
+      Foto_Negozio_2      | https://drive.google.com/file/d/... (link Drive)
       Foto_Officina       | https://drive.google.com/file/d/... (link Drive)
       Anno_Fondazione     | 2015
       Valore_1            | Consulenza vera
@@ -119,11 +120,14 @@ function renderChiSiamo(d) {
 
   /* Foto negozio */
   if (d.Foto_Negozio) {
-    renderPhoto('cs-foto-negozio', csDriveUrl(d.Foto_Negozio), 'Interno negozio VAI FERRO BIKE');
+     renderPhoto('cs-foto-negozio', csDriveUrl(d.Foto_Negozio), 'Interno negozio VAI FERRO BIKE');
+   }
+  if (d.Foto_Negozio_2) {
+    renderPhoto('cs-foto-negozio-2', csDriveUrl(d.Foto_Negozio_2), 'Interno negozio VAI FERRO BIKE (seconda foto)');
   }
-  if (d.Foto_Officina) {
-    renderPhoto('cs-foto-officina', csDriveUrl(d.Foto_Officina), 'Officina VAI FERRO BIKE');
-  }
+   if (d.Foto_Officina) {
+     renderPhoto('cs-foto-officina', csDriveUrl(d.Foto_Officina), 'Officina VAI FERRO BIKE');
+   }
 
   /* Scheda titolare */
   const titoEl = document.getElementById('cs-titolare');
