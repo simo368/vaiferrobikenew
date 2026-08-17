@@ -257,6 +257,17 @@ async function loadBikes() {
     allBikes = DEMO_BIKES.filter(b => isTrue(b.Disponibile));
     showDemoBanner();
   }
+
+  // Pre-filtra tramite URL (es. ?categoria=E-Bike)
+  const params = new URLSearchParams(window.location.search);
+  const catParam = params.get('categoria');
+  if (catParam) {
+    const isValid = allBikes.some(b => b.Categoria === catParam);
+    if (isValid) {
+      activeCategory = catParam;
+    }
+  }
+
   buildFilters();
   render();
 }
@@ -364,9 +375,24 @@ function render() {
 
   gridEl.innerHTML = sorted.map((bike, i) => renderCard(bike, i)).join('');
   gridEl.querySelectorAll('.product-card').forEach((card, i) => {
-    card.addEventListener('click', () => openModal(sorted[i]));
-    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openModal(sorted[i]); });
-    card.querySelector('.product-card__cta')?.addEventListener('click', e => e.stopPropagation());
+    const visual = card.querySelector('.product-card__visual');
+    const btnDettagli = card.querySelector('.btn-vedi-dettagli');
+    
+    // Assegna il click solo alla foto e al bottone
+    [visual, btnDettagli].forEach(el => {
+      if (!el) return;
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openModal(sorted[i]);
+      });
+      el.addEventListener('keydown', e => { 
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          e.stopPropagation();
+          openModal(sorted[i]); 
+        }
+      });
+    });
   });
 }
 
@@ -380,8 +406,8 @@ function renderCard(bike) {
   const waText = encodeURIComponent(`${CONFIG.WA_BASE_MSG}${bike.Nome} (${bike.Categoria}). Potete darmi informazioni?`);
 
   return `
-    <article class="product-card" tabindex="0" role="listitem" aria-label="${escapeHtml(bike.Nome)}">
-      <div class="product-card__visual">
+    <article class="product-card" aria-label="${escapeHtml(bike.Nome)}">
+      <div class="product-card__visual" tabindex="0" role="button" aria-label="Ingrandisci foto di ${escapeHtml(bike.Nome)}">
         ${hasImg
           ? `<img class="product-card__img" src="${firstImg}" alt="${escapeHtml(bike.Nome)}" loading="lazy" decoding="async"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -390,9 +416,6 @@ function renderCard(bike) {
         <div class="product-card__badges">
           ${isFeatured ? '<span class="badge-gold" style="font-size:11px">★ In evidenza</span>' : ''}
           ${bike.Categoria === 'Usato' ? '<span class="badge-accent" style="font-size:11px">Usato</span>' : ''}
-        </div>
-        <div class="product-card__overlay">
-          <span class="btn btn-sm btn-primary" style="pointer-events:none">Vedi dettaglio</span>
         </div>
       </div>
       <div class="product-card__body">
@@ -404,10 +427,9 @@ function renderCard(bike) {
         <p class="product-card__desc">${escapeHtml(bike.Descrizione_Breve || '')}</p>
         <div class="product-card__footer">
           <span class="product-card__price">${escapeHtml(formatPrezzo(bike.Prezzo))}</span>
-          <span class="product-card__cta">
-            Chiedi
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </span>
+          <button type="button" class="btn btn-sm btn-primary btn-vedi-dettagli" aria-label="Vedi dettagli di ${escapeHtml(bike.Nome)}">
+            Vedi dettagli
+          </button>
         </div>
       </div>
     </article>`;
@@ -615,7 +637,12 @@ function openModal(bike) {
   const waTarget = window.VAIFB?.WA_Vendite || window.VAIFB?.WA_Officina || CONFIG.WA_NUMBER;
   const telTarget = (window.VAIFB?.Tel_Vendite || window.VAIFB?.Tel_Officina || CONFIG.WA_NUMBER).replace(/\s/g, '');
   
-  modal.querySelector('.modal-wa-btn').href = `https://wa.me/${waTarget}?text=${waText}`;
+  const waBtn = modal.querySelector('.modal-wa-btn');
+  waBtn.href = `https://wa.me/${waTarget}?text=${waText}`;
+  if (!waBtn.querySelector('svg')) {
+    waBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ${waBtn.textContent}`;
+  }
+
   modal.querySelector('.modal-call-btn').href = `tel:${telTarget.startsWith('+') ? telTarget : '+' + telTarget}`;
 
   modal.classList.add('open');

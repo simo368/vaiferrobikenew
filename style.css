@@ -1258,7 +1258,7 @@ p {
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   overflow: hidden;
-  cursor: pointer;
+  cursor: default;
   transition: border-color var(--t-mid) ease, transform var(--t-mid) var(--ease-out), box-shadow var(--t-mid) ease;
   display: flex;
   flex-direction: column
@@ -1274,7 +1274,8 @@ p {
   position: relative;
   aspect-ratio: 3/2;
   background: var(--surface-2);
-  overflow: hidden
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .product-card__visual::after {
@@ -1400,13 +1401,8 @@ p {
   line-height: 1
 }
 
-.product-card__cta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent)
+.btn-vedi-dettagli {
+  min-height: 44px; /* Ensure 44x44px minimum touch target size */
 }
 
 /* Skeleton */
