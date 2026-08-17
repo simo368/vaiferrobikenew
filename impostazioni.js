@@ -59,6 +59,38 @@ window.VAIFB = {
   Hero_Riga_2:  'VIVI.',
   Hero_Riga_3:  'RIPARA.',
   Hero_Accento: '2',  // numero della riga con colore accent (1, 2 o 3)
+  // Servizi Home (titolo e testo delle 3 card)
+  Home_Servizio_1_Titolo: 'Negozio bici',
+  Home_Servizio_1_Testo:  'MTB, city bike, gravel, trekking, bici da corsa e bici bambino. Ti aiutiamo a scegliere la bici giusta per il tuo uso e il tuo budget.',
+  Home_Servizio_2_Titolo: 'Officina',
+  Home_Servizio_2_Testo:  'Riparazioni rapide, manutenzione, regolazione cambio e freni, sostituzione gomme, revisione completa. Anche per e-bike.',
+  Home_Servizio_3_Titolo: 'E-bike',
+  Home_Servizio_3_Testo:  'Consulenza guidata sul budget, scelta del modello giusto per il tuo uso e assistenza tecnica post-vendita direttamente in negozio.',
+  // Statistiche Home
+  Home_Stat_1_Numero:    '10+',
+  Home_Stat_1_Etichetta: 'Anni di esperienza',
+  Home_Stat_2_Numero:    '50+',
+  Home_Stat_2_Etichetta: 'Modelli in negozio',
+  Home_Stat_3_Numero:    '0',
+  Home_Stat_3_Etichetta: 'Compromessi sulla qualità',
+  // Testi generali Home
+  Home_Titolo_Servizi:   'Tutto ciò di cui\nhai bisogno, qui.',
+  Home_Testo_Servizi:    'Vendita, officina, e-bike e consulenza. Un solo posto, persone vere.',
+  Home_CTA_Titolo:       'Vieni a trovarci o scrivici.',
+  Home_CTA_Testo:        'Via Volturno 86, Cavezzo. Aperti dal lunedì al sabato, 08:30–12:30 / 15:30–19:30.',
+  // Testi Officina
+  Officina_Titolo_Hero:  'Officina rapida.',
+  Officina_Sottotitolo_Hero: 'Riparazioni, manutenzione e check-up. Il cuore di VAI FERRO BIKE batte qui.',
+  Officina_CTA:          'Non serve sempre prenotare. Passa in negozio per un check-up rapido.',
+  // Testi E-Bike
+  Ebike_Titolo_Hero:     'Il futuro è elettrico.',
+  Ebike_Sottotitolo_Hero: 'Più chilometri, meno fatica. Scopri come una e-bike può cambiarti la vita quotidiana e il weekend.',
+  Ebike_CTA:             'Vieni a provarne una.',
+  // Testi Contatti
+  Contatti_Indirizzo:    'Via Volturno, 86<br>41032 Cavezzo (MO)',
+  Contatti_Telefono:     '+39 320 347 6892',
+  Contatti_WhatsApp:     'Scrivi su WhatsApp →',
+  Contatti_Orari:        'Lun – Sab: 08:30–12:30 / 15:30–19:30',
 };
 
 /* ─── PARSING CSV ROBUSTO (stesso algoritmo di prodotti.js) ──── */
@@ -148,7 +180,25 @@ function applyConfig() {
   document.querySelectorAll('[data-vaifb]').forEach(el => {
     const key = el.dataset.vaifb;
     if (window.VAIFB[key] !== undefined && window.VAIFB[key] !== '') {
-      el.textContent = window.VAIFB[key];
+      // Usa textContent sicuro, ma permette <br> convertendo i line breaks
+      const safeText = String(window.VAIFB[key])
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/\n/g, '<br>');
+      el.innerHTML = safeText;
+      // Se l'elemento è uno stat-num con animazione counter, sincronizza data-count
+      // per mantenere l'animazione numerica coerente col valore del foglio
+      if (el.classList.contains('stat-num') && el.hasAttribute('data-count')) {
+        const raw = String(window.VAIFB[key]).trim();
+        // Estrae il numero e il suffisso (es. "10+" → count=10, suffix="+")
+        const match = raw.match(/^(\d+)(.*)$/);
+        if (match) {
+          el.dataset.count  = match[1];
+          el.dataset.suffix = match[2];
+        }
+      }
     }
   });
 
