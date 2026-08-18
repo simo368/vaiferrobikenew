@@ -113,15 +113,20 @@ function parseCSVRow(line) {
 }
 
 /* ─── CARICA DAL FOGLIO ──────────────────────────────────────── */
+const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minuti
+
 async function loadImpostazioni() {
   if (!IMPOSTAZIONI_SHEET_ID || IMPOSTAZIONI_SHEET_ID === 'YOUR_SHEET_ID_HERE') return;
   try {
     const cacheKey = `vaifb_impostazioni_${IMPOSTAZIONI_SHEET_ID}`;
-    const cached = sessionStorage.getItem(cacheKey);
+    const cacheTimeKey = `${cacheKey}_ts`;
+    const cachedText = sessionStorage.getItem(cacheKey);
+    const cachedTime = parseInt(sessionStorage.getItem(cacheTimeKey) || '0', 10);
+    const isExpired = (Date.now() - cachedTime) > CACHE_TTL_MS;
     let text;
-    
-    if (cached) {
-      text = cached;
+
+    if (cachedText && !isExpired) {
+      text = cachedText;
     } else {
       const url = `https://docs.google.com/spreadsheets/d/${IMPOSTAZIONI_SHEET_ID}/export?format=csv&gid=${GID_IMPOSTAZIONI}`;
       const res = await fetch(url);
@@ -129,6 +134,7 @@ async function loadImpostazioni() {
       const buffer = await res.arrayBuffer();
       text = new TextDecoder('utf-8').decode(buffer);
       sessionStorage.setItem(cacheKey, text);
+      sessionStorage.setItem(cacheTimeKey, String(Date.now()));
     }
     
     const lines = text.replace(/^\uFEFF/, '').trim().split('\n');
@@ -137,7 +143,13 @@ async function loadImpostazioni() {
       const cols = parseCSVRow(line);
       const key   = (cols[0] || '').trim();
       const value = (cols[1] || '').trim();
-      if (key) window.VAIFB[key] = value;
+      if (key) {
+        const cleanKey = key.split(':')[0].trim();
+        window.VAIFB[cleanKey] = value;
+        window.VAIFB[key] = value;
+        const canonicalKey = Object.keys(window.VAIFB).find(k => k.toLowerCase() === cleanKey.toLowerCase());
+        if (canonicalKey) window.VAIFB[canonicalKey] = value;
+      }
     });
   } catch (e) {
     console.warn('[VAIFB] Impostazioni non caricate:', e.message);

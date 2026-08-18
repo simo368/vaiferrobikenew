@@ -90,7 +90,11 @@ async function loadChiSiamo() {
       const cols = csParseLine(line);
       const key = (cols[0] || '').trim();
       const value = (cols[1] || '').trim();
-      if (key && value) data[key] = value;
+      if (key && value) {
+        const cleanKey = key.split(':')[0].trim();
+        data[cleanKey] = value;
+        data[key] = value;
+      }
     });
     renderChiSiamo(data);
   } catch (e) {

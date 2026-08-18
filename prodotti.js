@@ -185,11 +185,17 @@ function formatPrezzo(raw) {
 }
 
 /* ─── FETCH DAL GOOGLE SHEET ──────────────────────────────── */
+const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minuti
+
 async function fetchFromSheet() {
   if (!CONFIG.SHEET_ID || CONFIG.SHEET_ID === 'YOUR_SHEET_ID_HERE') return null;
   const cacheKey = `vaifb_prodotti_${CONFIG.SHEET_ID}`;
-  const cached = sessionStorage.getItem(cacheKey);
-  if (cached) return cached;
+  const cacheTimeKey = `${cacheKey}_ts`;
+  const cachedText = sessionStorage.getItem(cacheKey);
+  const cachedTime = parseInt(sessionStorage.getItem(cacheTimeKey) || '0', 10);
+  const isExpired = (Date.now() - cachedTime) > CACHE_TTL_MS;
+
+  if (cachedText && !isExpired) return cachedText;
 
   const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/export?format=csv&gid=0`;
   const res = await fetch(url);
@@ -197,6 +203,7 @@ async function fetchFromSheet() {
   const buffer = await res.arrayBuffer();
   const text = new TextDecoder('utf-8').decode(buffer);
   sessionStorage.setItem(cacheKey, text);
+  sessionStorage.setItem(cacheTimeKey, String(Date.now()));
   return text;
 }
 
@@ -560,7 +567,8 @@ function openModal(bike) {
 
   // Taglie
   const sizesEl = modal.querySelector('.product-modal__sizes');
-  const sizes = bike.Taglia ? bike.Taglia.split(',').map(s => s.trim()).filter(Boolean) : [];
+  const taglie = bike.Taglia || bike.Taglie || '';
+  const sizes = taglie ? taglie.split(',').map(s => s.trim()).filter(Boolean) : [];
   if (sizes.length) {
     sizesEl.removeAttribute('hidden');
     sizesEl.innerHTML = `
@@ -575,8 +583,9 @@ function openModal(bike) {
   // Info chips (Anno + Colore)
   const infoEl = modal.querySelector('.product-modal__info-chips');
   const infoChips = [];
-  if (bike.Colore) {
-    bike.Colore.split('|').forEach(c => {
+  const colori = bike.Colore || bike.Colori || '';
+  if (colori) {
+    colori.split('|').forEach(c => {
       const colorName = c.trim();
       if (colorImagesMap && colorImagesMap[colorName]) {
         // Render come swatch cliccabile
