@@ -185,7 +185,7 @@ function formatPrezzo(raw) {
 }
 
 /* ─── FETCH DAL GOOGLE SHEET ──────────────────────────────── */
-const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minuti
+const PRODOTTI_CACHE_TTL_MS = 30 * 60 * 1000; // 30 minuti
 
 async function fetchFromSheet() {
   if (!CONFIG.SHEET_ID || CONFIG.SHEET_ID === 'YOUR_SHEET_ID_HERE') return null;
@@ -193,7 +193,7 @@ async function fetchFromSheet() {
   const cacheTimeKey = `${cacheKey}_ts`;
   const cachedText = sessionStorage.getItem(cacheKey);
   const cachedTime = parseInt(sessionStorage.getItem(cacheTimeKey) || '0', 10);
-  const isExpired = (Date.now() - cachedTime) > CACHE_TTL_MS;
+  const isExpired = (Date.now() - cachedTime) > PRODOTTI_CACHE_TTL_MS;
 
   if (cachedText && !isExpired) return cachedText;
 
