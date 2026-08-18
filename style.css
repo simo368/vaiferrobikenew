@@ -1884,6 +1884,7 @@ p {
   overflow: hidden;
   padding: 40px 48px;
   box-sizing: border-box;
+  border-radius: var(--r-md);
 }
 
 @media (max-width: 767px) {
@@ -1893,7 +1894,17 @@ p {
 }
 
 .carousel__bg {
-  display: none;
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(20px) brightness(0.4);
+  transform: scale(1.15);
+  z-index: 1;
+}
+
+[data-theme="light"] .carousel__bg {
+  filter: blur(20px) brightness(0.55);
 }
 
 .carousel__slide img {
@@ -3046,10 +3057,6 @@ p {
 
   [data-theme="light"] .product-modal__visual {
     background: var(--surface)
-  }
-
-  .carousel__bg {
-    filter: blur(20px) brightness(0.35)
   }
 
   .contact-row--wa {
