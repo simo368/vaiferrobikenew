@@ -130,7 +130,7 @@ async function loadImpostazioni() {
     } else {
       const url = `https://docs.google.com/spreadsheets/d/${IMPOSTAZIONI_SHEET_ID}/export?format=csv&gid=${GID_IMPOSTAZIONI}`;
       const res = await fetch(url);
-      if (!res.ok) return;
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const buffer = await res.arrayBuffer();
       text = new TextDecoder('utf-8').decode(buffer);
       sessionStorage.setItem(cacheKey, text);
@@ -161,7 +161,7 @@ async function loadImpostazioni() {
 
 /* ─── APPLICA CONFIGURAZIONE AL DOM ─────────────────────────── */
 function applyConfig() {
-  const waOff  = window.VAIFB.WA_Officina || '393000000000';
+  const waOff  = window.VAIFB.WA_Officina || '393203476892';
   const telOff = (window.VAIFB.Tel_Officina || '').replace(/\s/g, '');
   const waVen  = window.VAIFB.WA_Vendite || waOff;
   const telVen = (window.VAIFB.Tel_Vendite || telOff).replace(/\s/g, '');

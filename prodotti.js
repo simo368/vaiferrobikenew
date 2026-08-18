@@ -32,7 +32,7 @@
 
 const CONFIG = {
   SHEET_ID: '1egFO7xMvKZLGTcVI_OjDq5Fjf2DgAmgFQlYHBxshmoI',   // ← CAMBIA SOLO QUESTO
-  WA_NUMBER: '393000000000',         // ← Numero WhatsApp senza + (es. 393331234567)
+  WA_NUMBER: '393203476892',         // ← Numero WhatsApp senza + (es. 393331234567)
   WA_BASE_MSG: 'Ciao VAI FERRO BIKE, sono interessato a ',
 };
 
