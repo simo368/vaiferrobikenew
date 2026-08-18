@@ -79,9 +79,18 @@ function csParseLine(line) {
 async function loadChiSiamo() {
   if (!CS_SHEET_ID || CS_SHEET_ID === 'YOUR_SHEET_ID_HERE') return;
   try {
-    const url = `https://docs.google.com/spreadsheets/d/${CS_SHEET_ID}/export?format=csv&gid=${GID_CHI_SIAMO}`;
-    const res = await fetch(url);
-    if (!res.ok) return; // Foglio non trovato o non configurato: pagina resta statica
+    const urls = [
+      `https://docs.google.com/spreadsheets/d/${CS_SHEET_ID}/gviz/tq?tqx=out:csv&gid=${GID_CHI_SIAMO}`,
+      `https://docs.google.com/spreadsheets/d/${CS_SHEET_ID}/export?format=csv&gid=${GID_CHI_SIAMO}`
+    ];
+    let res = null;
+    for (const url of urls) {
+      try {
+        const r = await fetch(url);
+        if (r.ok) { res = r; break; }
+      } catch (_) {}
+    }
+    if (!res || !res.ok) return; // Foglio non trovato o non configurato: pagina resta statica
     const buffer = await res.arrayBuffer();
     const text = new TextDecoder('utf-8').decode(buffer);
     const lines = text.replace(/^\uFEFF/, '').trim().split('\n');

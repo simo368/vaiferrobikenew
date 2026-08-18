@@ -197,9 +197,20 @@ async function fetchFromSheet() {
 
   if (cachedText && !isExpired) return cachedText;
 
-  const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/export?format=csv&gid=0`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const urls = [
+    `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&gid=0`,
+    `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/export?format=csv&gid=0`
+  ];
+
+  let res = null;
+  for (const url of urls) {
+    try {
+      const r = await fetch(url);
+      if (r.ok) { res = r; break; }
+    } catch (_) {}
+  }
+
+  if (!res || !res.ok) throw new Error('Impossibile scaricare il foglio');
   const buffer = await res.arrayBuffer();
   const text = new TextDecoder('utf-8').decode(buffer);
   sessionStorage.setItem(cacheKey, text);

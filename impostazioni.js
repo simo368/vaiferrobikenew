@@ -128,9 +128,18 @@ async function loadImpostazioni() {
     if (cachedText && !isExpired) {
       text = cachedText;
     } else {
-      const url = `https://docs.google.com/spreadsheets/d/${IMPOSTAZIONI_SHEET_ID}/export?format=csv&gid=${GID_IMPOSTAZIONI}`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const urls = [
+        `https://docs.google.com/spreadsheets/d/${IMPOSTAZIONI_SHEET_ID}/gviz/tq?tqx=out:csv&gid=${GID_IMPOSTAZIONI}`,
+        `https://docs.google.com/spreadsheets/d/${IMPOSTAZIONI_SHEET_ID}/export?format=csv&gid=${GID_IMPOSTAZIONI}`
+      ];
+      let res = null;
+      for (const url of urls) {
+        try {
+          const r = await fetch(url);
+          if (r.ok) { res = r; break; }
+        } catch (_) {}
+      }
+      if (!res || !res.ok) return;
       const buffer = await res.arrayBuffer();
       text = new TextDecoder('utf-8').decode(buffer);
       sessionStorage.setItem(cacheKey, text);
