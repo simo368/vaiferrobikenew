@@ -48,8 +48,6 @@
   --t-fast: .15s;
   --t-mid: .35s;
   --t-slow: .6s;
-  /* Altezza top bar: usata per offsettare hero e page-hero */
-  --topbar-h: 34px;
 }
 
 /* ─── TOKENS LIGHT ──────────────────────────────────────────────── */
@@ -158,6 +156,18 @@ body.page-entering {
   animation: pageEnter .4s ease forwards
 }
 
+/* ─── FOCUS VISIBLE ──────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--r-sm)
+}
+
+/* Rimuove outline su click/touch, mantiene solo per tastiera */
+:focus:not(:focus-visible) {
+  outline: none
+}
+
 /* ─── SKIP LINK ─────────────────────────────────────────────────── */
 .skip-link {
   position: fixed;
@@ -176,18 +186,6 @@ body.page-entering {
 
 .skip-link:focus {
   transform: translateY(0)
-}
-
-/* ─── FOCUS VISIBLE ──────────────────────────────────────────────── */
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: var(--r-sm)
-}
-
-/* Rimuove outline su click/touch, mantiene solo per tastiera */
-:focus:not(:focus-visible) {
-  outline: none
 }
 
 /* ─── LAYOUT ─────────────────────────────────────────────────────── */
@@ -476,25 +474,21 @@ p {
   position: relative
 }
 
-.nav a:hover {
-  color: var(--text)
-}
-
+.nav a:hover,
 .nav a.active {
-  color: var(--accent)
+  color: var(--text)
 }
 
 .nav a.active::after {
   content: '';
   position: absolute;
-  bottom: 2px;
-  left: 12px;
-  right: 12px;
-  width: auto;
-  height: 2px;
-  border-radius: 1px;
-  background: var(--accent);
-  transform: none
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent)
 }
 
 .header-actions {
@@ -661,14 +655,10 @@ p {
   transition: color var(--t-fast) ease, background var(--t-fast) ease, transform var(--t-mid) var(--ease-out), opacity var(--t-mid) ease
 }
 
-.mobile-nav a:hover {
+.mobile-nav a:hover,
+.mobile-nav a.active {
   color: var(--text);
   background: var(--surface-2)
-}
-
-.mobile-nav a.active {
-  color: var(--accent);
-  background: var(--accent-dim)
 }
 
 .mobile-drawer.open .mobile-nav a {
@@ -712,63 +702,6 @@ p {
   width: 100%
 }
 
-/* ─── TOP BAR ────────────────────────────────────────────────────── */
-.top-bar {
-  height: var(--topbar-h);
-  overflow: hidden;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  transition: height var(--t-mid) var(--ease-out), opacity var(--t-mid) ease;
-  display: flex;
-  align-items: center
-}
-
-[data-theme="light"] .top-bar {
-  background: var(--surface-2)
-}
-
-.header.scrolled .top-bar {
-  height: 0;
-  opacity: 0;
-  pointer-events: none
-}
-
-.top-bar__inner {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 11.5px;
-  font-weight: 500;
-  color: var(--text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: .02em
-}
-
-.top-bar__item {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  flex-shrink: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis
-}
-
-.top-bar__item svg {
-  flex-shrink: 0;
-  color: var(--accent);
-  opacity: .8
-}
-
-.top-bar__divider {
-  color: var(--border-hover);
-  flex-shrink: 0;
-  font-size: 14px;
-  line-height: 1
-}
-
 /* ─── STICKY BAR (mobile) ─────────────────────────────────────────── */
 .sticky-bar {
   display: none;
@@ -795,7 +728,7 @@ p {
   display: grid;
   place-items: center;
   position: relative;
-  padding-top: calc(var(--topbar-h) + 100px)
+  padding-top: 100px
 }
 
 .hero__bg {
@@ -1029,7 +962,7 @@ p {
 
 /* ─── PAGE HERO ───────────────────────────────────────────────────── */
 .page-hero {
-  padding-top: calc(var(--topbar-h) + clamp(120px, 18vw, 180px));
+  padding-top: clamp(120px, 18vw, 180px);
   padding-bottom: clamp(48px, 8vw, 80px);
   position: relative;
   overflow: hidden;
@@ -2922,22 +2855,12 @@ p {
 }
 
 @media(max-width:768px) {
-  :root {
-    --topbar-h: 0px
-  }
-
-  .top-bar {
-    display: none
-  }
-
   .nav {
     display: none
   }
 
   .menu-toggle {
-    display: flex;
-    min-width: 44px;
-    min-height: 44px
+    display: flex
   }
 
   .header .btn.desktop-cta {
@@ -3101,7 +3024,6 @@ p {
   }
 
   /* Bug 1: Hero mobile - riduce altezza minima e padding */
-  /* --topbar-h è 0px su mobile, quindi calc() = solo 80px */
   .hero {
     min-height: auto;
     padding-top: 80px;
@@ -3388,7 +3310,7 @@ p {
 /* ─── FASE 3: CATALOGO BICI ────────────────────────────────────── */
 
 .page-hero--catalog {
-  padding-top: calc(var(--topbar-h) + 120px);
+  padding-top: 140px;
   padding-bottom: 32px;
   text-align: left;
   min-height: auto;
@@ -3498,7 +3420,7 @@ p {
 
 @media (min-width: 768px) {
   .page-hero--catalog {
-    padding-top: calc(var(--topbar-h) + 160px);
+    padding-top: 180px;
     padding-bottom: 48px;
   }
   .filter-bar--catalog {
