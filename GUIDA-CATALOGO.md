@@ -36,14 +36,12 @@ Il sito dividerà intelligentemente le chiamate: se un utente è nella pagina Ri
 
 Il foglio principale che hai già creato serve per mostrare le bici nella pagina "Le nostre bici".
 
-### Le colonne obbligatorie:
+### I campi principali:
 - `Nome` (es: "Orbea Alma M50")
-- `Marca` (es: "Orbea")
 - `Categoria` (es: "MTB", "E-Bike", "Corsa", "City Bike", "Usato")
-- `Prezzo` (es: "€ 1.500")
-- `Descrizione_Breve` (Poche parole per incuriosire)
-- `Immagine` (Qui ci va il link di Google Drive, vedi sotto)
 - `Disponibile` (Scrivi "SI" per mostrarla sul sito, "NO" per nasconderla)
+
+`Marca`, `Prezzo`, `Immagine` e `Descrizione_Breve` sono facoltativi. La descrizione breve non compare nelle card del catalogo: può essere mostrata, se compilata, nel dettaglio della bici. Senza foto viene mostrata un'icona; senza prezzo il sito indica che il prezzo è su richiesta.
 
 ### Le nuove colonne avanzate (aggiungile al tuo foglio):
 - `Taglia` (es: "M" oppure "S | M | L" per inserire più taglie)

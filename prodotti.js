@@ -480,7 +480,6 @@ function renderCard(bike) {
           ${bike.Marca ? `<span class="product-card__brand">${escapeHtml(bike.Marca)}</span>` : ''}
         </div>
         <h3 class="product-card__name">${escapeHtml(bike.Nome)}</h3>
-        ${bike.Descrizione_Breve ? `<p class="product-card__desc">${escapeHtml(bike.Descrizione_Breve)}</p>` : ''}
         ${quickSpecs.length ? `<ul class="product-card__specs" aria-label="Dettagli rapidi">${quickSpecs.map(spec => `<li><span>${escapeHtml(spec.label)}</span><strong>${escapeHtml(spec.value)}</strong></li>`).join('')}</ul>` : ''}
         <div class="product-card__footer">
           <div class="product-card__price-wrap">
