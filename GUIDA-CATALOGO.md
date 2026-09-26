@@ -52,6 +52,27 @@ Il foglio principale che hai già creato serve per mostrare le bici nella pagina
 - `Ordinamento` (Se scrivi `1`, la bici uscirà per prima in assoluto, utile per spingere un modello)
 - `In_Evidenza` (Se scrivi "SI", spunterà una piccola icona con una stella d'oro sulla foto)
 
+### Scheda tecnica (facoltativa)
+
+Per mostrare dati tecnici più precisi, aggiungi alla riga delle intestazioni solo le colonne che vuoi usare:
+
+| Intestazione | Esempio |
+| :--- | :--- |
+| `Telaio` | Alluminio 6061 |
+| `Forcella` | RockShox Judy, 100 mm |
+| `Ammortizzatore` | RockShox Deluxe Select |
+| `Motore` | Bosch Performance Line CX |
+| `Batteria` | 625 Wh |
+| `Autonomia` | Fino a 120 km |
+| `Cambio` | Shimano Deore, 12 velocità |
+| `Freni` | Shimano idraulici, 4 pistoni |
+| `Ruote` | 29 pollici |
+| `Peso` | 24,8 kg |
+| `Garanzia` | 2 anni |
+| `Condizione` | Nuovo, usato, ottimo stato |
+
+Sono tutte facoltative: se una colonna o una cella resta vuota, quel dettaglio non compare nella scheda. La pagina mostra automaticamente solo le informazioni disponibili. Puoi continuare a usare `Caratteristiche` per una lista libera di dettagli separati da `|`.
+
 ---
 
 ## ♻️ 3. Le Occasioni (L'Usato)

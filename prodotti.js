@@ -14,6 +14,9 @@
    Nome | Marca | Categoria | Descrizione_Breve | Descrizione_Completa
    Prezzo | Disponibile | In_Evidenza | Immagine | Caratteristiche
    Taglia | Colore | Colore_Immagini | Anno | Ordinamento | Note
+   Telaio | Forcella | Ammortizzatore | Motore | Batteria | Autonomia
+   Cambio | Freni | Ruote | Peso | Garanzia | Condizione
+   Tutte le colonne tecniche sono facoltative e possono restare vuote.
 
    FORMATO IMMAGINE (colonna "Immagine"):
    - Link Google Drive (si convertono automaticamente):
@@ -369,7 +372,9 @@ function applySearch(list) {
     b.Nome?.toLowerCase().includes(q) ||
     b.Marca?.toLowerCase().includes(q) ||
     b.Categoria?.toLowerCase().includes(q) ||
-    b.Descrizione_Breve?.toLowerCase().includes(q)
+    b.Descrizione_Breve?.toLowerCase().includes(q) ||
+    ['Telaio', 'Forcella', 'Ammortizzatore', 'Motore', 'Batteria', 'Autonomia', 'Cambio', 'Freni', 'Ruote', 'Peso', 'Garanzia', 'Condizione']
+      .some(field => String(b[field] || '').toLowerCase().includes(q))
   );
 }
 
@@ -440,11 +445,24 @@ function renderCard(bike) {
   const isOffer = isTrue(bike.In_Offerta) || (bike.Prezzo_Scontato && String(bike.Prezzo_Scontato).trim() !== '');
   const priceOld = isOffer ? formatPrezzo(bike.Prezzo) : null;
   const priceNew = isOffer ? formatPrezzo(bike.Prezzo_Scontato || bike.Prezzo) : formatPrezzo(bike.Prezzo);
-  const waText = encodeURIComponent(`${CONFIG.WA_BASE_MSG}${bike.Nome} (${bike.Categoria}). Potete darmi informazioni?`);
+  const bikeSizes = bike.Taglia || bike.Taglie || '';
+  const quickSpecs = [
+    bike.Motore && { label: 'Motore', value: bike.Motore },
+    bike.Batteria && { label: 'Batteria', value: bike.Batteria },
+    bike.Cambio && { label: 'Cambio', value: bike.Cambio },
+    bike.Freni && { label: 'Freni', value: bike.Freni },
+    bike.Forcella && { label: 'Forcella', value: bike.Forcella },
+    bike.Ruote && { label: 'Ruote', value: bike.Ruote },
+    bikeSizes && { label: 'Taglie', value: bikeSizes },
+    bike.Anno && { label: 'Anno', value: bike.Anno },
+  ].filter(Boolean).slice(0, 2);
+  const availability = bike.Disponibilita_Testo && bike.Disponibilita_Testo.trim()
+    ? bike.Disponibilita_Testo.trim()
+    : 'Disponibile';
 
   return `
     <article class="product-card" aria-label="${escapeHtml(bike.Nome)}">
-      <div class="product-card__visual" tabindex="0" role="button" aria-label="Ingrandisci foto di ${escapeHtml(bike.Nome)}">
+      <div class="product-card__visual" tabindex="0" role="button" aria-label="Apri i dettagli di ${escapeHtml(bike.Nome)}">
         ${hasImg
           ? `<img class="product-card__img" src="${firstImg}" alt="${escapeHtml(bike.Nome)}" loading="lazy" decoding="async"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -459,16 +477,20 @@ function renderCard(bike) {
       <div class="product-card__body">
         <div class="product-card__meta">
           <span class="product-card__cat">${escapeHtml(bike.Categoria)}</span>
+          ${bike.Marca ? `<span class="product-card__brand">${escapeHtml(bike.Marca)}</span>` : ''}
         </div>
         <h3 class="product-card__name">${escapeHtml(bike.Nome)}</h3>
+        ${bike.Descrizione_Breve ? `<p class="product-card__desc">${escapeHtml(bike.Descrizione_Breve)}</p>` : ''}
+        ${quickSpecs.length ? `<ul class="product-card__specs" aria-label="Dettagli rapidi">${quickSpecs.map(spec => `<li><span>${escapeHtml(spec.label)}</span><strong>${escapeHtml(spec.value)}</strong></li>`).join('')}</ul>` : ''}
         <div class="product-card__footer">
           <div class="product-card__price-wrap">
             ${isOffer 
               ? `<span class="price-old">${escapeHtml(priceOld)}</span><span class="price-new">${escapeHtml(priceNew)}</span>` 
               : `<span class="product-card__price">${escapeHtml(priceNew)}</span>`}
+            <span class="product-card__availability"><i aria-hidden="true"></i>${escapeHtml(availability)}</span>
           </div>
           <button type="button" class="btn btn-sm btn-primary btn-vedi-dettagli" aria-label="Vedi dettagli di ${escapeHtml(bike.Nome)}">
-            Vedi dettagli
+            Scopri la bici
           </button>
         </div>
       </div>
@@ -618,6 +640,20 @@ function openModal(bike) {
   const features = bike.Caratteristiche
     ? bike.Caratteristiche.split('|').map(f => f.trim()).filter(Boolean)
     : [];
+  const technicalFields = [
+    ['Telaio', bike.Telaio],
+    ['Forcella', bike.Forcella],
+    ['Ammortizzatore', bike.Ammortizzatore],
+    ['Motore', bike.Motore],
+    ['Batteria', bike.Batteria],
+    ['Autonomia', bike.Autonomia],
+    ['Cambio', bike.Cambio],
+    ['Freni', bike.Freni],
+    ['Ruote', bike.Ruote],
+    ['Peso', bike.Peso],
+    ['Garanzia', bike.Garanzia],
+    ['Condizione', bike.Condizione],
+  ].filter(([, value]) => value && String(value).trim());
 
   // Carousel
   const visualEl = modal.querySelector('.product-modal__visual');
@@ -664,7 +700,7 @@ function openModal(bike) {
   // Taglie
   const sizesEl = modal.querySelector('.product-modal__sizes');
   const taglie = bike.Taglia || bike.Taglie || '';
-  const sizes = taglie ? taglie.split(',').map(s => s.trim()).filter(Boolean) : [];
+  const sizes = taglie ? taglie.split(/[,|]/).map(s => s.trim()).filter(Boolean) : [];
   if (sizes.length) {
     sizesEl.removeAttribute('hidden');
     sizesEl.innerHTML = `
@@ -690,6 +726,9 @@ function openModal(bike) {
         infoChips.push(`<span class="info-chip">🎨 ${escapeHtml(colorName)}</span>`);
       }
     });
+  }
+  if (bike.Anno && String(bike.Anno).trim()) {
+    infoChips.push(`<span class="info-chip">Anno modello · ${escapeHtml(bike.Anno)}</span>`);
   }
   if (infoChips.length) {
     infoEl.removeAttribute('hidden');
@@ -720,6 +759,20 @@ function openModal(bike) {
         }
       });
     });
+  }
+
+  // Specifiche tecniche strutturate: le righe vuote non vengono mostrate.
+  const specsEl = modal.querySelector('.product-modal__specs');
+  if (technicalFields.length) {
+    specsEl.hidden = false;
+    specsEl.innerHTML = `
+      <h4>Scheda tecnica</h4>
+      <dl class="technical-specs">
+        ${technicalFields.map(([label, value]) => `<div class="technical-specs__row"><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}
+      </dl>`;
+  } else {
+    specsEl.hidden = true;
+    specsEl.innerHTML = '';
   }
 
   // Caratteristiche
