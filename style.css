@@ -3459,14 +3459,22 @@ p {
 /* ─── FASE 4: OFFERTE E LAYOUT MODAL ────────────────────────────── */
 
 .badge-offer {
-  background: #e53935;
-  color: #fff;
+  background: var(--surface-2);
+  color: #e53935;
+  border: 1px solid #e53935;
   padding: 4px 8px;
   border-radius: var(--r-sm);
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   display: inline-block;
+}
+
+[data-theme="dark"] .badge-offer {
+  background: rgba(229, 57, 53, 0.15);
+  border-color: transparent;
+  color: #ff5252;
 }
 
 .product-card__price-wrap {
@@ -3537,11 +3545,13 @@ p {
 
 .product-modal__short-desc {
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.7;
   color: var(--text);
   margin-bottom: 32px;
   padding-bottom: 24px;
   border-bottom: 1px solid var(--border);
+  font-style: italic;
+  font-weight: 400;
 }
 
 /* Feature Groups */
@@ -3569,12 +3579,17 @@ p {
 }
 
 .feature-group__key {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  align-self: center;
 }
 
 .feature-group__val {
   color: var(--text);
+  font-weight: 500;
 }
 
 @media (max-width: 480px) {

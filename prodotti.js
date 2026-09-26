@@ -643,7 +643,9 @@ function openModal(bike) {
   };
   
   let dispHtml = '';
-  if (isDispText(bike.Disponibilita)) {
+  if (bike.Disponibilita_Testo && bike.Disponibilita_Testo.trim() !== '') {
+     dispHtml = `<div class="product-modal__availability">${escapeHtml(bike.Disponibilita_Testo)}</div>`;
+  } else if (isDispText(bike.Disponibilita)) {
      dispHtml = `<div class="product-modal__availability">${escapeHtml(bike.Disponibilita)}</div>`;
   } else if (isDispText(bike.Disponibile)) {
      dispHtml = `<div class="product-modal__availability">${escapeHtml(bike.Disponibile)}</div>`;
