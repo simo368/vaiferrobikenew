@@ -436,6 +436,10 @@ function renderCard(bike) {
   const firstImg = imgs[0] || '';
   const hasImg = !!firstImg;
   const isFeatured = isTrue(bike.In_Evidenza);
+  
+  const isOffer = isTrue(bike.In_Offerta) || (bike.Prezzo_Scontato && String(bike.Prezzo_Scontato).trim() !== '');
+  const priceOld = isOffer ? formatPrezzo(bike.Prezzo) : null;
+  const priceNew = isOffer ? formatPrezzo(bike.Prezzo_Scontato || bike.Prezzo) : formatPrezzo(bike.Prezzo);
   const waText = encodeURIComponent(`${CONFIG.WA_BASE_MSG}${bike.Nome} (${bike.Categoria}). Potete darmi informazioni?`);
 
   return `
@@ -449,17 +453,20 @@ function renderCard(bike) {
         <div class="product-card__badges">
           ${isFeatured ? '<span class="badge-gold" style="font-size:11px">★ In evidenza</span>' : ''}
           ${bike.Categoria === 'Usato' ? '<span class="badge-accent" style="font-size:11px">Usato</span>' : ''}
+          ${isOffer ? '<span class="badge-offer" style="font-size:11px">In offerta!</span>' : ''}
         </div>
       </div>
       <div class="product-card__body">
         <div class="product-card__meta">
           <span class="product-card__cat">${escapeHtml(bike.Categoria)}</span>
-          ${bike.Marca ? `<span class="product-card__brand">${escapeHtml(bike.Marca)}</span>` : ''}
         </div>
         <h3 class="product-card__name">${escapeHtml(bike.Nome)}</h3>
-        <p class="product-card__desc">${escapeHtml(bike.Descrizione_Breve || '')}</p>
         <div class="product-card__footer">
-          <span class="product-card__price">${escapeHtml(formatPrezzo(bike.Prezzo))}</span>
+          <div class="product-card__price-wrap">
+            ${isOffer 
+              ? `<span class="price-old">${escapeHtml(priceOld)}</span><span class="price-new">${escapeHtml(priceNew)}</span>` 
+              : `<span class="product-card__price">${escapeHtml(priceNew)}</span>`}
+          </div>
           <button type="button" class="btn btn-sm btn-primary btn-vedi-dettagli" aria-label="Vedi dettagli di ${escapeHtml(bike.Nome)}">
             Vedi dettagli
           </button>
@@ -618,16 +625,39 @@ function openModal(bike) {
   const carouselEl = visualEl.querySelector('.carousel');
   if (carouselEl && images.length > 1) initCarousel(carouselEl);
 
-  // Meta chips
+  // Meta chips e Brand
   modal.querySelector('.product-modal__meta').innerHTML = `
-    <span class="product-card__badge" style="position:static">${bike.Categoria}</span>
-    ${bike.In_Evidenza?.toUpperCase() === 'SI' ? '<span class="chip">⭐ In evidenza</span>' : ''}
-    ${bike.Marca ? `<span class="chip">${escapeHtml(bike.Marca)}</span>` : ''}
-    ${bike.Anno ? `<span class="chip">📅 ${escapeHtml(bike.Anno)}</span>` : ''}`;
+    ${bike.Marca ? `<div class="product-modal__brand">${escapeHtml(bike.Marca)}</div>` : ''}
+  `;
 
   modal.querySelector('.product-modal__title').textContent = bike.Nome;
-  modal.querySelector('.product-modal__price').textContent = bike.Prezzo || 'Prezzo su richiesta';
-  modal.querySelector('.product-modal__desc').textContent = bike.Descrizione_Completa || bike.Descrizione_Breve || '';
+
+  const isOffer = isTrue(bike.In_Offerta) || (bike.Prezzo_Scontato && String(bike.Prezzo_Scontato).trim() !== '');
+  const priceOld = isOffer ? formatPrezzo(bike.Prezzo) : null;
+  const priceNew = isOffer ? formatPrezzo(bike.Prezzo_Scontato || bike.Prezzo) : formatPrezzo(bike.Prezzo);
+
+  const isDispText = (val) => {
+    if (!val) return false;
+    const v = String(val).trim().toUpperCase();
+    return v !== 'SI' && v !== 'NO' && v !== 'TRUE' && v !== 'FALSE' && v !== 'VERO' && v !== 'FALSO';
+  };
+  
+  let dispHtml = '';
+  if (isDispText(bike.Disponibilita)) {
+     dispHtml = `<div class="product-modal__availability">${escapeHtml(bike.Disponibilita)}</div>`;
+  } else if (isDispText(bike.Disponibile)) {
+     dispHtml = `<div class="product-modal__availability">${escapeHtml(bike.Disponibile)}</div>`;
+  }
+
+  modal.querySelector('.product-modal__price').innerHTML = isOffer 
+      ? `<div class="product-modal__price-wrap"><span class="price-old">${escapeHtml(priceOld)}</span><span class="price-new">${escapeHtml(priceNew)}</span></div> ${dispHtml}`
+      : `<div class="product-modal__price-wrap"><span class="price-new">${escapeHtml(priceNew)}</span></div> ${dispHtml}`;
+
+  modal.querySelector('.product-modal__desc').innerHTML = `
+    <span class="product-modal__cat">${escapeHtml(bike.Categoria)}</span>
+    ${bike.Descrizione_Breve ? `<div class="product-modal__short-desc">${escapeHtml(bike.Descrizione_Breve)}</div>` : ''}
+    ${(!bike.Descrizione_Breve && bike.Descrizione_Completa) ? `<div class="product-modal__short-desc">${escapeHtml(bike.Descrizione_Completa)}</div>` : ''}
+  `;
 
   // Taglie
   const sizesEl = modal.querySelector('.product-modal__sizes');
@@ -691,16 +721,37 @@ function openModal(bike) {
   }
 
   // Caratteristiche
+  let featHtml = '';
+  if (features.length) {
+    const hasHeaders = features.some(f => f.includes(':'));
+    if (hasHeaders) {
+      // Gruppi!
+      featHtml = `<h4>Specifiche Tecniche</h4><div class="feature-groups">`;
+      features.forEach(f => {
+        const idx = f.indexOf(':');
+        if (idx > -1) {
+          const key = f.substring(0, idx).trim();
+          const val = f.substring(idx + 1).trim();
+          featHtml += `<div class="feature-group"><span class="feature-group__key">${escapeHtml(key)}</span><span class="feature-group__val">${escapeHtml(val)}</span></div>`;
+        } else {
+          featHtml += `<div class="feature-group"><span class="feature-group__val" style="grid-column: 1 / -1">${escapeHtml(f)}</span></div>`;
+        }
+      });
+      featHtml += `</div>`;
+    } else {
+      // Piatta
+      featHtml = `<h4>Caratteristiche principali</h4>
+        <div class="feature-tags-list">
+          ${features.map(f => `
+            <span class="feature-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              ${escapeHtml(f)}
+            </span>`).join('')}
+        </div>`;
+    }
+  }
   const featEl = modal.querySelector('.product-modal__features');
-  featEl.innerHTML = features.length ? `
-    <h4>Caratteristiche principali</h4>
-    <div class="feature-tags-list">
-      ${features.map(f => `
-        <span class="feature-tag">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          ${escapeHtml(f)}
-        </span>`).join('')}
-    </div>` : '';
+  featEl.innerHTML = featHtml;
 
   // Note
   const noteEl = modal.querySelector('.product-modal__note');
@@ -717,6 +768,38 @@ function openModal(bike) {
   }
 
   modal.querySelector('.modal-call-btn').href = `tel:${telTarget.startsWith('+') ? telTarget : '+' + telTarget}`;
+
+  // Related products
+  let relatedEl = modal.querySelector('.product-modal__related');
+  if (!relatedEl) {
+    relatedEl = document.createElement('div');
+    relatedEl.className = 'product-modal__related';
+    modal.querySelector('.product-modal__content').appendChild(relatedEl);
+  }
+  
+  const related = allBikes.filter(b => b.Categoria === bike.Categoria && b.Nome !== bike.Nome).slice(0, 3);
+  if (related.length > 0) {
+    relatedEl.innerHTML = `
+      <h3 class="related-title">Potrebbe interessarti</h3>
+      <div class="related-grid">
+        ${related.map(b => renderCard(b)).join('')}
+      </div>
+    `;
+    // Add click events to related cards
+    relatedEl.querySelectorAll('.product-card').forEach((card, i) => {
+      const visual = card.querySelector('.product-card__visual');
+      const btn = card.querySelector('.btn-vedi-dettagli');
+      [visual, btn].forEach(el => {
+        if (!el) return;
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openModal(related[i]);
+        });
+      });
+    });
+  } else {
+    relatedEl.innerHTML = '';
+  }
 
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
